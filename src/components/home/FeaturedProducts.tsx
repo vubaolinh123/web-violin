@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { ShoppingCart, ArrowRight } from "lucide-react";
 import { getFeaturedProducts } from "@/lib/data/products";
 import { formatPrice } from "@/lib/utils/formatPrice";
@@ -29,10 +29,10 @@ export default function FeaturedProducts() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           {featured.map((product, i) => (
             <AnimatedSection key={product.id} delay={i * 0.1}>
-              <motion.div
+              <m.div
                 whileHover={{ y: -6 }}
                 transition={{ duration: 0.3, ease: "easeOut" }}
-                className="group relative bg-charcoal-800 border border-charcoal-700 hover:border-gold/30 rounded overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-gold/10"
+                className="group relative bg-charcoal-800 border border-charcoal-700 hover:border-gold/30 rounded overflow-hidden transition-[transform,box-shadow,border-color] duration-300 hover:shadow-2xl hover:shadow-gold/10"
               >
                 {/* Image */}
                 <div className="relative aspect-[4/5] overflow-hidden bg-charcoal-700">
@@ -93,7 +93,7 @@ export default function FeaturedProducts() {
                     </Link>
                   </div>
                 </div>
-              </motion.div>
+              </m.div>
             </AnimatedSection>
           ))}
         </div>

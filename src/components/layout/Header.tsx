@@ -23,7 +23,7 @@ export default function Header() {
     <>
       <header
         className={cn(
-          "fixed top-0 inset-x-0 z-30 transition-all duration-500",
+          "fixed top-0 inset-x-0 z-30 transition-[background-color,backdrop-filter,border-color,box-shadow] duration-500",
           isTransparent
             ? "bg-transparent"
             : "bg-charcoal/95 backdrop-blur-md border-b border-charcoal-700/60 shadow-lg shadow-charcoal/20"

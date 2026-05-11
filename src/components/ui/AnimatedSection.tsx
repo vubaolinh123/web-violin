@@ -1,7 +1,6 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { m, useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/utils/cn";
 
 interface AnimatedSectionProps {
@@ -21,31 +20,28 @@ export default function AnimatedSection({
   duration = 0.6,
   once = true,
 }: AnimatedSectionProps) {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once, margin: "-80px 0px" });
+  const prefersReduced = useReducedMotion();
 
   const offsets: Record<string, { x?: number; y?: number }> = {
-    up: { y: 32 },
-    down: { y: -32 },
-    left: { x: 32 },
-    right: { x: -32 },
+    up: { y: prefersReduced ? 0 : 32 },
+    down: { y: prefersReduced ? 0 : -32 },
+    left: { x: prefersReduced ? 0 : 32 },
+    right: { x: prefersReduced ? 0 : -32 },
     none: {},
   };
 
   const initial = { opacity: 0, ...offsets[direction] };
-  const animate = isInView
-    ? { opacity: 1, x: 0, y: 0 }
-    : initial;
+  const animate = { opacity: 1, x: 0, y: 0 };
 
   return (
-    <motion.div
-      ref={ref}
+    <m.div
       initial={initial}
-      animate={animate}
-      transition={{ duration, delay, ease: "easeOut" }}
+      whileInView={animate}
+      viewport={{ once, margin: "-100px 0px" }}
+      transition={{ duration: prefersReduced ? 0 : duration, delay: prefersReduced ? 0 : delay, ease: "easeOut" }}
       className={cn(className)}
     >
       {children}
-    </motion.div>
+    </m.div>
   );
 }

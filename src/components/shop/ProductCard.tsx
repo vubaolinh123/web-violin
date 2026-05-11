@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { ShoppingCart, Star } from "lucide-react";
 import type { Product } from "@/types/product";
 import { formatPrice } from "@/lib/utils/formatPrice";
@@ -18,7 +18,7 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
   const { addItem } = useCart();
 
   return (
-    <motion.div
+    <m.div
       whileHover={{ y: -5 }}
       transition={{ duration: 0.25, ease: "easeOut" }}
       className="group bg-charcoal-800 border border-charcoal-700 hover:border-gold/30 rounded overflow-hidden transition-colors duration-300 hover:shadow-xl hover:shadow-gold/8"
@@ -101,6 +101,6 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
           )}
         </div>
       </div>
-    </motion.div>
+    </m.div>
   );
 }

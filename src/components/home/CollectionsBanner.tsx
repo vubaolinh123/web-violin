@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { collections } from "@/lib/data/collections";
 import SectionTitle from "@/components/ui/SectionTitle";
@@ -15,9 +15,7 @@ export default function CollectionsBanner() {
     <section className="py-24 md:py-32 relative overflow-hidden bg-charcoal-800">
       {/* Gradient mesh background */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 left-1/4 w-96 h-96 rounded-full bg-gold/5 blur-3xl" />
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 rounded-full bg-gold/4 blur-3xl" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] rounded-full bg-charcoal-700/60 blur-3xl" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] rounded-full bg-gold/4 blur-3xl" />
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -32,7 +30,7 @@ export default function CollectionsBanner() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {featured.map((collection, i) => (
             <AnimatedSection key={collection.id} delay={i * 0.1}>
-              <motion.div
+              <m.div
                 whileHover={{ scale: 1.02 }}
                 transition={{ duration: 0.3 }}
                 className="group relative overflow-hidden rounded aspect-[4/3] bg-charcoal-700"
@@ -67,7 +65,7 @@ export default function CollectionsBanner() {
                     Explore <ArrowRight size={12} />
                   </Link>
                 </div>
-              </motion.div>
+              </m.div>
             </AnimatedSection>
           ))}
         </div>

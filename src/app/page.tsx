@@ -41,12 +41,12 @@ export default function HomePage() {
       <OrganizationJsonLd />
       <WebSiteJsonLd />
       <HeroSection />
-      <FeaturedProducts />
-      <CollectionsBanner />
-      <BrandStory />
-      <TestimonialsSection />
-      <WhyChooseUs />
-      <NewsletterBanner />
+      <div className="section-offscreen"><FeaturedProducts /></div>
+      <div className="section-offscreen"><CollectionsBanner /></div>
+      <div className="section-offscreen"><BrandStory /></div>
+      <div className="section-offscreen"><TestimonialsSection /></div>
+      <div className="section-offscreen"><WhyChooseUs /></div>
+      <div className="section-offscreen"><NewsletterBanner /></div>
     </>
   );
 }

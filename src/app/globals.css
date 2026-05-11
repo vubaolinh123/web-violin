@@ -127,6 +127,13 @@ body {
   }
 }
 
+/* Offscreen section rendering optimisation */
+.section-offscreen {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 500px;
+  contain: layout paint;
+}
+
 /* Respect user's reduced-motion preference — disable parallax & transitions */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

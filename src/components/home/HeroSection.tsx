@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion, useScroll, useTransform, type Variants } from "framer-motion";
+import { m, useScroll, useTransform, type Variants } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 
 export default function HeroSection() {
@@ -38,7 +38,7 @@ export default function HeroSection() {
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_70%_50%,rgba(201,168,76,0.06),transparent)] pointer-events-none" />
 
       {/* Violin image — right side, parallax */}
-      <motion.div
+      <m.div
         style={{ y: imageY, rotate: imageRotate, willChange: "transform" }}
         className="absolute right-[-8%] md:right-[-4%] lg:right-0 top-[5%] w-[65%] md:w-[55%] lg:w-[48%] h-[90%] pointer-events-none select-none"
       >
@@ -56,11 +56,11 @@ export default function HeroSection() {
           {/* Fade out bottom */}
           <div className="absolute inset-0 bg-gradient-to-t from-charcoal via-transparent to-transparent" />
         </div>
-      </motion.div>
+      </m.div>
 
       {/* Text content */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pt-24 pb-16 md:pt-0 md:pb-0">
-        <motion.div
+        <m.div
           style={{ y: textY }}
           variants={containerVariants}
           initial="hidden"
@@ -68,15 +68,15 @@ export default function HeroSection() {
           className="max-w-xl lg:max-w-2xl"
         >
           {/* Overline */}
-          <motion.p
+          <m.p
             variants={itemVariants}
             className="font-mono text-xs md:text-sm tracking-[0.3em] uppercase text-gold mb-6"
           >
             Est. 2008 · Cremona-Inspired
-          </motion.p>
+          </m.p>
 
           {/* Headline */}
-          <motion.h1
+          <m.h1
             variants={itemVariants}
             className="font-display font-light text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-parchment leading-[0.95] mb-6"
           >
@@ -85,26 +85,26 @@ export default function HeroSection() {
             <span className="text-gold-gradient italic">of Exceptional</span>
             <br />
             Character
-          </motion.h1>
+          </m.h1>
 
           {/* Sub-divider */}
-          <motion.div variants={itemVariants} className="flex items-center gap-3 mb-6">
+          <m.div variants={itemVariants} className="flex items-center gap-3 mb-6">
             <span className="block w-12 h-px bg-gold/60" />
             <span className="block w-1.5 h-1.5 rotate-45 bg-gold shrink-0" />
             <span className="block w-12 h-px bg-gold/60" />
-          </motion.div>
+          </m.div>
 
           {/* Body copy */}
-          <motion.p
+          <m.p
             variants={itemVariants}
             className="font-body text-base md:text-lg text-parchment/60 leading-relaxed mb-10 max-w-md"
           >
             Handcrafted violins, master bows, and curated accessories — each instrument
             selected for tone, craft, and lasting beauty.
-          </motion.p>
+          </m.p>
 
           {/* CTAs */}
-          <motion.div variants={itemVariants} className="flex flex-wrap gap-4">
+          <m.div variants={itemVariants} className="flex flex-wrap gap-4">
             <Link
               href="/shop"
               className="inline-flex items-center gap-2 px-8 py-4 text-lg rounded-sm btn-shimmer text-charcoal font-medium shadow-lg hover:shadow-gold/30 hover:shadow-xl transition-all duration-300"
@@ -118,10 +118,10 @@ export default function HeroSection() {
             >
               View Collections
             </Link>
-          </motion.div>
+          </m.div>
 
           {/* Stats */}
-          <motion.div
+          <m.div
             variants={itemVariants}
             className="flex flex-wrap gap-8 mt-14 pt-8 border-t border-charcoal-700/60"
           >
@@ -137,12 +137,12 @@ export default function HeroSection() {
                 </p>
               </div>
             ))}
-          </motion.div>
-        </motion.div>
+          </m.div>
+        </m.div>
       </div>
 
       {/* Scroll indicator */}
-      <motion.div
+      <m.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5, duration: 0.8 }}
@@ -151,12 +151,12 @@ export default function HeroSection() {
         <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-parchment/30">
           Scroll
         </span>
-        <motion.span
+        <m.span
           animate={{ y: [0, 8, 0] }}
           transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
           className="block w-px h-8 bg-gradient-to-b from-parchment/30 to-transparent"
         />
-      </motion.div>
+      </m.div>
     </section>
   );
 }

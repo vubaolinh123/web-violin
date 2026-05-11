@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { X } from "lucide-react";
 import { NAV_LINKS, SITE_NAME } from "@/lib/constants";
@@ -16,7 +16,7 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
       {isOpen && (
         <>
           {/* Backdrop */}
-          <motion.div
+          <m.div
             key="backdrop"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -27,7 +27,7 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
           />
 
           {/* Drawer */}
-          <motion.div
+          <m.div
             key="drawer"
             initial={{ x: "-100%" }}
             animate={{ x: 0 }}
@@ -52,7 +52,7 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
             {/* Nav links */}
             <nav className="flex-1 px-6 py-8 space-y-1">
               {NAV_LINKS.map((link, i) => (
-                <motion.div
+                <m.div
                   key={link.href}
                   initial={{ opacity: 0, x: -16 }}
                   animate={{ opacity: 1, x: 0 }}
@@ -65,7 +65,7 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
                   >
                     {link.label}
                   </Link>
-                </motion.div>
+                </m.div>
               ))}
             </nav>
 
@@ -75,7 +75,7 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
                 Instruments of Exceptional Character
               </p>
             </div>
-          </motion.div>
+          </m.div>
         </>
       )}
     </AnimatePresence>

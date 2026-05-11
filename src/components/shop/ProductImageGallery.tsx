@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils/cn";
 
 interface ProductImageGalleryProps {
@@ -33,7 +33,7 @@ export default function ProductImageGallery({
       {/* Main image */}
       <div className="relative aspect-[4/5] rounded overflow-hidden bg-charcoal-700">
         <AnimatePresence custom={direction} mode="wait">
-          <motion.div
+          <m.div
             key={activeIndex}
             custom={direction}
             variants={variants}
@@ -51,7 +51,7 @@ export default function ProductImageGallery({
               className="object-cover"
               sizes="(max-width: 768px) 100vw, 50vw"
             />
-          </motion.div>
+          </m.div>
         </AnimatePresence>
 
         {/* Image counter */}
