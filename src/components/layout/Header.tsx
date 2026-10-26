@@ -3,104 +3,79 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ShoppingCart, Menu, Search } from "lucide-react";
-import { useScrollY } from "@/lib/hooks/useScrollY";
-import { useCart } from "@/lib/hooks/useCart";
-import { NAV_LINKS, SITE_NAME } from "@/lib/constants";
+import { ClipboardList, Menu } from "lucide-react";
+import { useInquiry } from "@/lib/hooks/useInquiry";
+import { NAV_LINKS } from "@/lib/constants";
 import { cn } from "@/lib/utils/cn";
+import Wordmark from "./Wordmark";
 import MobileNav from "./MobileNav";
 
 export default function Header() {
-  const scrollY = useScrollY();
-  const { count } = useCart();
+  const { count } = useInquiry();
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  const isHome = pathname === "/";
-  const isTransparent = isHome && scrollY < 80;
-
   return (
     <>
-      <header
-        className={cn(
-          "fixed top-0 inset-x-0 z-30 transition-[background-color,backdrop-filter,border-color,box-shadow] duration-500",
-          isTransparent
-            ? "bg-transparent"
-            : "bg-charcoal/95 backdrop-blur-md border-b border-charcoal-700/60 shadow-lg shadow-charcoal/20"
-        )}
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16 md:h-20">
-            {/* Logo */}
-            <Link
-              href="/"
-              className="font-display text-xl md:text-2xl tracking-wide text-gold hover:text-gold-light transition-colors shrink-0"
-            >
-              {SITE_NAME}
-            </Link>
+      <header className="sticky top-0 z-30 border-b border-line bg-paper/95 backdrop-blur-sm">
+        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 sm:px-8 md:h-20">
+          <Link href="/" aria-label="Strad Plus — home" className="shrink-0">
+            <Wordmark />
+          </Link>
 
-            {/* Desktop Nav */}
-            <nav className="hidden md:flex items-center gap-8">
-              {NAV_LINKS.map((link) => (
+          <nav aria-label="Main" className="hidden items-center gap-7 lg:flex xl:gap-9">
+            {NAV_LINKS.map((link) => {
+              const active = pathname === link.href || pathname.startsWith(`${link.href}/`);
+              return (
                 <Link
                   key={link.href}
                   href={link.href}
+                  aria-current={active ? "page" : undefined}
                   className={cn(
-                    "font-body text-sm tracking-wide transition-colors relative group",
-                    pathname === link.href
-                      ? "text-gold"
-                      : "text-parchment/70 hover:text-parchment"
+                    "group relative py-1 text-[0.8rem] font-medium uppercase tracking-[0.14em] transition-colors",
+                    active ? "text-varnish" : "text-ink-soft hover:text-ink"
                   )}
                 >
                   {link.label}
                   <span
                     className={cn(
-                      "absolute -bottom-1 left-0 h-px bg-gold transition-all duration-300",
-                      pathname === link.href ? "w-full" : "w-0 group-hover:w-full"
+                      "absolute -bottom-0.5 left-0 h-px bg-varnish transition-all duration-300",
+                      active ? "w-full" : "w-0 group-hover:w-full"
                     )}
                   />
                 </Link>
-              ))}
-            </nav>
+              );
+            })}
+          </nav>
 
-            {/* Right actions */}
-            <div className="flex items-center gap-1 md:gap-2">
-              <Link
-                href="/search"
-                aria-label="Search"
-                className="p-2 text-parchment/60 hover:text-parchment transition-colors"
-              >
-                <Search size={20} />
-              </Link>
+          <div className="flex items-center gap-1">
+            <Link
+              href="/inquiry"
+              aria-label={`Inquiry list, ${count} ${count === 1 ? "item" : "items"}`}
+              className="relative flex items-center gap-2 p-2 text-ink-soft transition-colors hover:text-ink"
+            >
+              <ClipboardList size={20} strokeWidth={1.5} />
+              <span className="hidden text-[0.8rem] font-medium uppercase tracking-[0.14em] sm:inline">
+                Inquiry
+              </span>
+              {count > 0 && (
+                <span className="flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-varnish px-1 text-[10px] font-semibold text-paper">
+                  {count > 99 ? "99+" : count}
+                </span>
+              )}
+            </Link>
 
-              <Link
-                href="/cart"
-                aria-label={`Cart (${count} items)`}
-                className="relative p-2 text-parchment/60 hover:text-parchment transition-colors"
-              >
-                <ShoppingCart size={20} />
-                {count > 0 && (
-                  <span className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] flex items-center justify-center bg-gold text-charcoal text-[10px] font-mono font-bold rounded-full px-1">
-                    {count > 99 ? "99+" : count}
-                  </span>
-                )}
-              </Link>
-
-              {/* Mobile hamburger */}
-              <button
-                onClick={() => setMobileOpen(true)}
-                aria-label="Open menu"
-                className="md:hidden p-2 text-parchment/60 hover:text-parchment transition-colors"
-              >
-                <Menu size={22} />
-              </button>
-            </div>
+            <button
+              type="button"
+              onClick={() => setMobileOpen(true)}
+              aria-label="Open menu"
+              className="p-2 text-ink-soft transition-colors hover:text-ink lg:hidden"
+            >
+              <Menu size={22} strokeWidth={1.5} />
+            </button>
           </div>
         </div>
       </header>
-
-      {/* Spacer for non-home pages */}
-      {!isHome && <div className="h-16 md:h-20" />}
 
       <MobileNav isOpen={mobileOpen} onClose={() => setMobileOpen(false)} />
     </>

@@ -1,47 +1,47 @@
-export const SITE_NAME = "Arco Violins";
-export const SITE_TAGLINE = "Instruments of Exceptional Character";
-export const SITE_URL = "https://arcoviolins.com";
+export const SITE_NAME = "Strad Plus";
+export const SITE_TAGLINE = "The acoustic DNA of wood";
+export const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://stradplus.com";
 export const SITE_DESCRIPTION =
-  "Discover handcrafted violins, premium bows, and accessories at Arco Violins. Serving musicians and collectors worldwide.";
+  "Strad Plus is an acoustic formula that changes how wood resonates. Developed over thirty years by master luthier and researcher Nguyễn Xuân Huy, for instruments, interiors and professional sport.";
 
 export const NAV_LINKS = [
-  { label: "Shop", href: "/shop" },
-  { label: "Collections", href: "/collections" },
-  { label: "About", href: "/about" },
+  { label: "Technology", href: "/technology" },
+  { label: "Products", href: "/products" },
+  { label: "Founder", href: "/founder" },
+  { label: "Media", href: "/media" },
+  { label: "Artists & Projects", href: "/artists-projects" },
   { label: "Contact", href: "/contact" },
 ];
 
 export const CONTACT_INFO = {
-  address: "14 Luthier Lane, Cremona District, New York, NY 10001",
-  phone: "+1 (212) 555-0182",
-  email: "hello@arcoviolins.com",
-  hours: "Mon–Sat: 10am–7pm, Sun: 12pm–5pm",
+  email: "contact@stradplus.com",
+  phone: "+49 176 3169 3400",
+  phoneHref: "+4917631693400",
 };
 
-export const SOCIAL_LINKS = [
-  { label: "Instagram", href: "https://instagram.com/arcoviolins", icon: "instagram" },
-  { label: "Facebook", href: "https://facebook.com/arcoviolins", icon: "facebook" },
-  { label: "YouTube", href: "https://youtube.com/@arcoviolins", icon: "youtube" },
-  { label: "Twitter", href: "https://twitter.com/arcoviolins", icon: "twitter" },
-];
+/** Google Drive file id of the Nguyễn Xuân Huy interview. */
+export const INTERVIEW_VIDEO = {
+  id: "1Xl3NP5Igv9flgMIReUMyBplxD5UbhOBZ",
+  title: "Strad Plus on a $400 guitar — interview with Nguyễn Xuân Huy and guitarist Vũ Đức Hiển",
+  watchUrl:
+    "https://drive.google.com/file/d/1Xl3NP5Igv9flgMIReUMyBplxD5UbhOBZ/view",
+  embedUrl:
+    "https://drive.google.com/file/d/1Xl3NP5Igv9flgMIReUMyBplxD5UbhOBZ/preview",
+};
 
 export const FOOTER_LINKS = {
-  Shop: [
-    { label: "Violins", href: "/shop?category=violin" },
-    { label: "Bows", href: "/shop?category=bow" },
-    { label: "Cases", href: "/shop?category=case" },
-    { label: "Accessories", href: "/shop?category=accessory" },
+  Explore: [
+    { label: "Technology", href: "/technology" },
+    { label: "Products", href: "/products" },
+    { label: "Founder", href: "/founder" },
   ],
-  Collections: [
-    { label: "Master Series", href: "/collections/master-series" },
-    { label: "Student Series", href: "/collections/student-series" },
-    { label: "Baroque", href: "/collections/baroque" },
-    { label: "Accessories & Care", href: "/collections/accessories" },
+  Gallery: [
+    { label: "Media", href: "/media" },
+    { label: "Artists & Projects", href: "/artists-projects" },
   ],
-  Company: [
-    { label: "About Us", href: "/about" },
-    { label: "Contact", href: "/contact" },
-    { label: "Privacy Policy", href: "/privacy" },
-    { label: "Terms of Service", href: "/terms" },
+  Contact: [
+    { label: "Contact form", href: "/contact" },
+    { label: "Distributor inquiry", href: "/inquiry" },
   ],
 };

@@ -1,47 +1,25 @@
 @import "tailwindcss";
 
 @theme {
-  /* Colors */
-  --color-charcoal: #0D0D0D;
-  --color-charcoal-800: #1A1A1A;
-  --color-charcoal-700: #262626;
-  --color-charcoal-600: #333333;
-  --color-gold: #C9A84C;
-  --color-gold-light: #E8C97A;
-  --color-gold-dark: #9A7A2E;
-  --color-gold-muted: #8B6914;
-  --color-parchment: #F5F0E8;
-  --color-parchment-dark: #E8E0D0;
-  --color-ivory: #FAFAF7;
+  /* Palette — warm paper, ink, and violin varnish */
+  --color-paper: #f6f1e8;
+  --color-paper-deep: #ede5d6;
+  --color-ink: #1a1511;
+  --color-ink-soft: #55493f;
+  --color-ink-mute: #85786b;
+  --color-line: #d9cebc;
+  --color-varnish: #8b3a1e;
+  --color-varnish-dark: #6b2b14;
+  --color-brass: #a88b52;
+  --color-brass-light: #cdb27a;
+  --color-night: #15110d;
+  --color-night-soft: #211b15;
 
   /* Fonts */
-  --font-display: var(--font-cormorant), Georgia, serif;
-  --font-body: var(--font-dm-sans), system-ui, sans-serif;
-  --font-mono: var(--font-jetbrains), monospace;
-
-  /* Animations */
-  --animate-shimmer: shimmer 2.5s linear infinite;
-  --animate-fade-up: fadeUp 0.6s ease forwards;
-  --animate-grain: none;
-
-  @keyframes shimmer {
-    0% { background-position: -200% center; }
-    100% { background-position: 200% center; }
-  }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-
-  @keyframes pulse-gold {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(201, 168, 76, 0.4); }
-    50% { box-shadow: 0 0 20px 4px rgba(201, 168, 76, 0.2); }
-  }
+  --font-display: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
+  --font-body: var(--font-inter), system-ui, sans-serif;
 }
 
-/* Base styles */
 *, *::before, *::after {
   box-sizing: border-box;
 }
@@ -53,88 +31,42 @@ html {
 }
 
 body {
-  background-color: var(--color-charcoal);
-  color: var(--color-parchment);
+  background-color: var(--color-paper);
+  color: var(--color-ink);
   font-family: var(--font-body);
   min-height: 100vh;
 }
 
-/* Grain texture overlay */
-.grain-overlay {
-  position: relative;
-}
-.grain-overlay::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-  pointer-events: none;
-  z-index: 1;
-  opacity: 0.06;
-  mix-blend-mode: overlay;
-  /* Static — no animation, prevents repaint on scroll */
-  will-change: auto;
-}
-
-/* Gold shimmer button */
-.btn-shimmer {
-  background: linear-gradient(
-    110deg,
-    var(--color-gold-dark) 0%,
-    var(--color-gold) 30%,
-    var(--color-gold-light) 50%,
-    var(--color-gold) 70%,
-    var(--color-gold-dark) 100%
-  );
-  background-size: 200% auto;
-  animation: shimmer 3s linear infinite;
-}
-
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-}
-::-webkit-scrollbar-track {
-  background: var(--color-charcoal-800);
-}
-::-webkit-scrollbar-thumb {
-  background: var(--color-gold-dark);
-  border-radius: 3px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--color-gold);
-}
-
-/* Gold text gradient */
-.text-gold-gradient {
-  background: linear-gradient(135deg, var(--color-gold-light), var(--color-gold), var(--color-gold-dark));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* Selection */
 ::selection {
-  background: var(--color-gold);
-  color: var(--color-charcoal);
+  background: var(--color-varnish);
+  color: var(--color-paper);
 }
 
-/* Reduce backdrop-blur on mobile — GPU-expensive on low-end devices */
-@media (max-width: 768px) {
-  .backdrop-blur-md {
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-  }
+:focus-visible {
+  outline: 2px solid var(--color-varnish);
+  outline-offset: 3px;
+}
+
+/* Small tracked label used above headings and in metadata */
+.eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+/* Long-form reading text */
+.prose-strad p + p {
+  margin-top: 1.25em;
 }
 
 /* Offscreen section rendering optimisation */
 .section-offscreen {
   content-visibility: auto;
-  contain-intrinsic-size: 0 500px;
-  contain: layout paint;
+  contain-intrinsic-size: 0 600px;
 }
 
-/* Respect user's reduced-motion preference — disable parallax & transitions */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
@@ -142,4 +74,9 @@ body {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* Cormorant defaults to old-style figures; use lining figures for years and phone numbers */
+.font-display {
+  font-variant-numeric: lining-nums;
 }

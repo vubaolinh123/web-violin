@@ -1,70 +1,62 @@
-import type { Metadata } from "next";
-import { Cormorant_Garamond, DM_Sans, JetBrains_Mono } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Cormorant_Garamond, Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import MotionProvider from "@/components/motion/MotionProvider";
+import { OrganizationJsonLd } from "@/components/seo/JsonLd";
+import { SITE_DESCRIPTION, SITE_NAME, SITE_TAGLINE, SITE_URL } from "@/lib/constants";
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant",
-  subsets: ["latin"],
+  subsets: ["latin", "latin-ext", "vietnamese"],
   weight: ["300", "400", "500", "600", "700"],
+  style: ["normal", "italic"],
   display: "swap",
 });
 
-const dmSans = DM_Sans({
-  variable: "--font-dm-sans",
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  display: "swap",
-});
-
-const jetbrains = JetBrains_Mono({
-  variable: "--font-jetbrains",
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin", "latin-ext", "vietnamese"],
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://arcoviolins.com"),
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: "Arco Violins — Premium Violin Shop",
-    template: "%s | Arco Violins",
+    default: `${SITE_NAME} — ${SITE_TAGLINE}`,
+    template: `%s | ${SITE_NAME}`,
   },
-  description:
-    "Discover handcrafted violins, premium bows, and accessories at Arco Violins. Serving musicians and collectors worldwide with instruments of exceptional quality.",
-  keywords: ["violin", "bow", "violin shop", "handcrafted violin", "premium instruments", "Arco Violins"],
-  authors: [{ name: "Arco Violins" }],
+  description: SITE_DESCRIPTION,
+  keywords: [
+    "Strad Plus",
+    "Nguyễn Xuân Huy",
+    "violin acoustics",
+    "violin bridge",
+    "soundpost",
+    "luthier",
+    "instrument resonance",
+    "wood acoustics",
+  ],
+  authors: [{ name: SITE_NAME }],
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://arcoviolins.com",
-    siteName: "Arco Violins",
-    title: "Arco Violins — Premium Violin Shop",
-    description:
-      "Discover handcrafted violins, premium bows, and accessories at Arco Violins.",
-    images: [
-      {
-        url: "/images/og-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Arco Violins — Premium Violin Shop",
-      },
-    ],
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    title: `${SITE_NAME} — ${SITE_TAGLINE}`,
+    description: SITE_DESCRIPTION,
   },
   twitter: {
     card: "summary_large_image",
-    title: "Arco Violins — Premium Violin Shop",
-    description:
-      "Discover handcrafted violins, premium bows, and accessories at Arco Violins.",
-    images: ["/images/og-image.jpg"],
+    title: `${SITE_NAME} — ${SITE_TAGLINE}`,
+    description: SITE_DESCRIPTION,
   },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: { index: true, follow: true },
-  },
+  robots: { index: true, follow: true },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#f6f1e8",
 };
 
 export default function RootLayout({
@@ -75,10 +67,11 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${cormorant.variable} ${dmSans.variable} ${jetbrains.variable} h-full`}
+      className={`${cormorant.variable} ${inter.variable} h-full`}
       data-scroll-behavior="smooth"
     >
-      <body className="min-h-full flex flex-col bg-charcoal text-parchment font-body antialiased" suppressHydrationWarning>
+      <body className="flex min-h-full flex-col bg-paper font-body text-ink antialiased">
+        <OrganizationJsonLd />
         <MotionProvider>
           <Header />
           <main className="flex-1">{children}</main>
