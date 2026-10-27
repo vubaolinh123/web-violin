@@ -6,13 +6,19 @@ import SectionHeading from "@/components/ui/SectionHeading";
 import Reveal from "@/components/ui/Reveal";
 import VideoEmbed from "@/components/ui/VideoEmbed";
 import ProductCard from "@/components/products/ProductCard";
+import ContactPaths from "@/components/contact/ContactPaths";
 import { products } from "@/lib/data/products";
 import { applications } from "@/lib/data/applications";
+import { projects } from "@/lib/data/projects";
+import { cn } from "@/lib/utils/cn";
 
 const facts = [
   { value: "30+", label: "years of research, testing and refinement" },
-  { value: "3", label: "fields of application: instruments, interiors, sport" },
-  { value: "Minutes", label: "for a treated instrument to open up" },
+  {
+    value: "3",
+    label: "fields of application: Musical Instruments, Architectural Acoustics, Sports Equipment",
+  },
+  { value: "Minutes", label: "to reveal the instrument's true voice" },
 ];
 
 export default function HomePage() {
@@ -26,20 +32,17 @@ export default function HomePage() {
           <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-night to-transparent" />
         </div>
         <div className="relative mx-auto max-w-7xl px-5 pb-24 pt-24 sm:px-8 md:pb-36 md:pt-36">
-          <p className="eyebrow mb-6 text-brass-light">Acoustic research for wood</p>
+          <p className="eyebrow mb-6 text-brass-light">A Secret Formula</p>
           <h1 className="max-w-3xl font-display text-5xl font-medium leading-[1.05] text-paper sm:text-6xl md:text-7xl">
-            Unlocking the acoustic DNA of wood.
+            Deciphering the Acoustic DNA of Wood
           </h1>
           <p className="mt-8 max-w-xl text-lg leading-relaxed text-paper/75">
-            Strad Plus is an acoustic formula, developed over more than thirty years by master luthier and
-            researcher Nguyễn Xuân Huy, that changes how a piece of wood sounds, resonates and carries vibration.
+            Developed by violinist, craftsman and researcher Nguyễn Xuân Huy over more than thirty years, Strad
+            Plus is a proprietary method that enhances the way wood resonates, responds, and transmits vibration.
           </p>
-          <div className="mt-10 flex flex-wrap gap-4">
+          <div className="mt-10">
             <ButtonLink href="/technology" variant="solid" className="border-brass-light bg-brass-light text-night hover:border-paper hover:bg-paper">
-              Discover the technology
-            </ButtonLink>
-            <ButtonLink href="/inquiry" variant="outline-light">
-              Distributor inquiry
+              Discover Strad Plus <ArrowRight size={15} strokeWidth={1.5} />
             </ButtonLink>
           </div>
         </div>
@@ -51,7 +54,7 @@ export default function HomePage() {
           {facts.map((f, i) => (
             <div key={f.value} className={i > 0 ? "md:border-l md:border-line md:pl-10" : ""}>
               <p className="font-display text-5xl font-medium text-varnish">{f.value}</p>
-              <p className="mt-2 max-w-[18rem] text-sm leading-relaxed text-ink-soft">{f.label}</p>
+              <p className="mt-2 max-w-[19rem] text-sm leading-relaxed text-ink-soft">{f.label}</p>
             </div>
           ))}
         </div>
@@ -68,14 +71,16 @@ export default function HomePage() {
           </Reveal>
           <Reveal delay={0.1} className="prose-strad text-lg leading-relaxed text-ink-soft md:col-span-7">
             <p>
-              Strad Plus began with a persistent wish: to recreate the sound of the instruments made by the
-              legendary maker Stradivarius. Nguyễn Xuân Huy spent more than thirty years researching, testing
-              and refining before Strad Plus was born.
+              Strad Plus began with a persistent ambition: to understand and recreate the extraordinary acoustic
+              qualities that made Stradivari instruments legendary. For more than thirty years, Nguyễn Xuân Huy
+              researched, tested, and refined his ideas before ultimately developing Strad Plus.
             </p>
             <p>
-              It is a formula in acoustics that reads the DNA of wood. Every piece of wood carries its own
-              pressure points and its own matrix of sound. When the right formula is applied to those points,
-              the sound quality, the resonance and the physical transmission of the wood change at once.
+              At the heart of Strad Plus lies what we describe as the &ldquo;acoustic DNA&rdquo; of wood. Every
+              piece of wood possesses its own resonance characteristics and vibrational behavior. By identifying
+              and treating key acoustic points within the material, Strad Plus can immediately change how
+              vibrations are transmitted through the wood, enhancing resonance, responsiveness, and overall sound
+              quality.
             </p>
             <p>
               <Link
@@ -89,14 +94,35 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Products */}
+      {/* Founder */}
       <section className="section-offscreen border-t border-line bg-paper-deep/60">
+        <div className="mx-auto grid max-w-7xl items-center gap-14 px-5 py-24 sm:px-8 md:grid-cols-12 md:py-32">
+          <Reveal className="md:col-span-5">
+            <div className="relative aspect-[4/5] overflow-hidden bg-night">
+              <ChladniArt n={2} m={5} levels={4} resolution={56} />
+            </div>
+          </Reveal>
+          <Reveal delay={0.1} className="md:col-span-7 md:pl-8">
+            <SectionHeading
+              eyebrow="Founder"
+              title="Nguyễn Xuân Huy"
+              intro="Violinist, craftsman and scientific researcher. Born into a family of musicians, trained at the Hanoi Conservatory and the Tchaikovsky Moscow State Conservatory. Driven by a lifelong quest to understand the voice of wood, he spent more than thirty years developing what would eventually become Strad Plus."
+            />
+            <ButtonLink href="/founder" variant="text" className="mt-8">
+              Read his story <ArrowRight size={15} strokeWidth={1.5} />
+            </ButtonLink>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* Products */}
+      <section className="section-offscreen border-t border-line">
         <div className="mx-auto max-w-7xl px-5 py-24 sm:px-8 md:py-32">
           <Reveal className="flex flex-wrap items-end justify-between gap-6">
             <SectionHeading
               eyebrow="Products"
-              title="Strad Plus, in two forms."
-              intro="Processed wooden components for the instrument you already play, or the method applied to the instrument itself."
+              title="Strad Plus, from Technology to Product."
+              intro="The full Strad Plus treatment applied directly to the instrument, or our bridge and soundpost set derived from the same acoustic technology."
             />
             <ButtonLink href="/products" variant="text">
               All products <ArrowRight size={15} strokeWidth={1.5} />
@@ -113,23 +139,27 @@ export default function HomePage() {
       </section>
 
       {/* Applications */}
-      <section className="section-offscreen mx-auto max-w-7xl px-5 py-24 sm:px-8 md:py-32">
-        <Reveal>
-          <SectionHeading
-            eyebrow="Applications"
-            title="One formula, many kinds of wood."
-            intro="Wherever wood carries sound or vibration, Strad Plus can change the result."
-          />
-        </Reveal>
-        <div className="mt-14 grid gap-px border border-line bg-line md:grid-cols-3">
-          {applications.map((a, i) => (
-            <Reveal key={a.id} delay={i * 0.1} className="bg-paper p-8 md:p-10">
-              <p className="eyebrow text-varnish">0{i + 1}</p>
-              <h3 className="mt-5 font-display text-3xl font-medium leading-tight">{a.title}</h3>
-              <p className="mt-4 font-display text-xl italic leading-snug text-ink-soft">{a.lead}</p>
-              <p className="mt-5 text-sm leading-relaxed text-ink-soft">{a.examples}</p>
-            </Reveal>
-          ))}
+      <section className="section-offscreen border-t border-line bg-paper-deep/60">
+        <div className="mx-auto max-w-7xl px-5 py-24 sm:px-8 md:py-32">
+          <Reveal>
+            <SectionHeading
+              eyebrow="Applications"
+              title="One Technology, Endless Possibilities"
+              intro="Wherever wood matters, Strad Plus makes a difference."
+            />
+          </Reveal>
+          <div className="mt-14 grid gap-px border border-line bg-line md:grid-cols-3">
+            {applications.map((a, i) => (
+              <Reveal key={a.id} delay={i * 0.1} className="flex flex-col bg-paper p-8 md:p-10">
+                <p className="eyebrow text-varnish">0{i + 1}</p>
+                <h3 className="mt-5 font-display text-3xl font-medium leading-tight">{a.title}</h3>
+                <p className="mt-4 flex-1 font-display text-xl italic leading-snug text-ink-soft">{a.lead}</p>
+                <p className="mt-6 border-t border-line pt-5 text-sm leading-relaxed text-ink-soft">
+                  {a.examples}
+                </p>
+              </Reveal>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -150,41 +180,41 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Founder */}
+      {/* Recognition & Collaborations */}
       <section className="section-offscreen mx-auto max-w-7xl px-5 py-24 sm:px-8 md:py-32">
-        <div className="grid items-center gap-14 md:grid-cols-12">
-          <Reveal className="md:col-span-5">
-            <div className="relative aspect-[4/5] overflow-hidden bg-night">
-              <ChladniArt n={2} m={5} levels={4} resolution={56} />
-            </div>
-          </Reveal>
-          <Reveal delay={0.1} className="md:col-span-7 md:pl-8">
-            <SectionHeading
-              eyebrow="Founder"
-              title="Nguyễn Xuân Huy"
-              intro="Violinist, master craftsman and scientific researcher. Born into a family of musicians, trained at the Hanoi Conservatory and the Tchaikovsky Moscow State Conservatory."
-            />
-            <ButtonLink href="/founder" variant="text" className="mt-8">
-              Read his story <ArrowRight size={15} strokeWidth={1.5} />
-            </ButtonLink>
-          </Reveal>
+        <Reveal className="flex flex-wrap items-end justify-between gap-6">
+          <SectionHeading
+            eyebrow="Recognition"
+            title="Recognition & Collaborations"
+            intro="Musicians, makers and institutions who have heard and worked with Strad Plus."
+          />
+          <ButtonLink href="/artists-projects" variant="text">
+            All artists & projects <ArrowRight size={15} strokeWidth={1.5} />
+          </ButtonLink>
+        </Reveal>
+        <div className={cn("mt-14 grid gap-px border border-line bg-line", projects.length > 1 && "md:grid-cols-2")}>
+          {projects.map((p, i) => (
+            <Reveal key={p.title} delay={i * 0.1} className="bg-paper p-8 md:p-10">
+              <p className="eyebrow text-varnish">{p.category}</p>
+              <h3 className="mt-4 font-display text-3xl font-medium leading-tight">{p.title}</h3>
+              <p className="mt-2 text-sm text-ink-mute">{p.artist}</p>
+              <p className="mt-4 leading-relaxed text-ink-soft">{p.description}</p>
+            </Reveal>
+          ))}
         </div>
       </section>
 
-      {/* Distributor CTA */}
+      {/* Contact CTA */}
       <section className="bg-varnish">
-        <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-8 px-5 py-16 sm:px-8 md:flex-row md:items-center md:py-20">
-          <div className="max-w-xl">
-            <h2 className="font-display text-4xl font-medium leading-tight text-paper md:text-5xl">
-              Interested in representing Strad Plus?
+        <div className="mx-auto max-w-7xl px-5 py-20 sm:px-8 md:py-28">
+          <Reveal>
+            <h2 className="max-w-2xl font-display text-4xl font-medium leading-tight text-paper md:text-6xl">
+              Bring Strad Plus to Your Region
             </h2>
-            <p className="mt-4 leading-relaxed text-paper/80">
-              We are speaking with distributors, makers and workshops around the world.
-            </p>
+          </Reveal>
+          <div className="mt-12 md:mt-16">
+            <ContactPaths tone="varnish" />
           </div>
-          <ButtonLink href="/contact" variant="outline-light" className="shrink-0">
-            Get in touch
-          </ButtonLink>
         </div>
       </section>
     </>

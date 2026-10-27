@@ -11,6 +11,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/media", priority: 0.7 },
     { path: "/artists-projects", priority: 0.6 },
     { path: "/contact", priority: 0.6 },
+    { path: "/request-evaluation", priority: 0.7 },
+    { path: "/experience", priority: 0.7 },
     ...products.map((p) => ({ path: `/products/${p.slug}`, priority: 0.8 })),
   ];
 

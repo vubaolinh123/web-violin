@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import { Mail, Phone } from "lucide-react";
 import PageHero from "@/components/ui/PageHero";
-import ContactForm from "@/components/contact/ContactForm";
+import ContactPaths from "@/components/contact/ContactPaths";
 import { CONTACT_INFO } from "@/lib/constants";
 
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Contact Strad Plus: distributor and workshop enquiries, press, and artists interested in the technology.",
+    "Contact Strad Plus: evaluation samples for distributors and industry partners, and Strad Plus for musicians and instrument owners.",
 };
 
 export default function ContactPage() {
@@ -15,49 +15,30 @@ export default function ContactPage() {
     <>
       <PageHero
         eyebrow="Contact"
-        title="Let us talk."
-        intro="For distribution, workshops, press, or to work with an artist on a project."
+        title="How can we help?"
+        intro="Choose the option that fits you best, so your request reaches the right people."
         figure={{ n: 2, m: 3 }}
       />
 
-      <section className="mx-auto max-w-7xl px-5 py-24 sm:px-8 md:py-28">
-        <div className="grid gap-16 md:grid-cols-12">
-          <aside className="md:col-span-4">
-            <h2 className="eyebrow text-varnish">Direct</h2>
-            <ul className="mt-6 space-y-6">
-              <li className="flex gap-4">
-                <Mail size={20} strokeWidth={1.5} className="mt-1 shrink-0 text-varnish" />
-                <div>
-                  <p className="text-xs uppercase tracking-[0.16em] text-ink-mute">Email</p>
-                  <a
-                    href={`mailto:${CONTACT_INFO.email}`}
-                    className="mt-1 block font-display text-2xl transition-colors hover:text-varnish"
-                  >
-                    {CONTACT_INFO.email}
-                  </a>
-                </div>
-              </li>
-              <li className="flex gap-4">
-                <Phone size={20} strokeWidth={1.5} className="mt-1 shrink-0 text-varnish" />
-                <div>
-                  <p className="text-xs uppercase tracking-[0.16em] text-ink-mute">Phone</p>
-                  <a
-                    href={`tel:${CONTACT_INFO.phoneHref}`}
-                    className="mt-1 block font-display text-2xl transition-colors hover:text-varnish"
-                  >
-                    {CONTACT_INFO.phone}
-                  </a>
-                </div>
-              </li>
-            </ul>
-          </aside>
+      <section className="mx-auto max-w-7xl px-5 py-20 sm:px-8 md:py-28">
+        <ContactPaths />
 
-          <div className="md:col-span-8">
-            <h2 className="eyebrow text-varnish">Send a message</h2>
-            <div className="mt-6">
-              <ContactForm />
-            </div>
-          </div>
+        <div className="mt-16 flex flex-col gap-6 border-t border-line pt-10 sm:flex-row sm:items-center sm:gap-12">
+          <h2 className="eyebrow text-varnish">Or reach us directly</h2>
+          <a
+            href={`mailto:${CONTACT_INFO.email}`}
+            className="flex items-center gap-3 font-display text-2xl transition-colors hover:text-varnish"
+          >
+            <Mail size={18} strokeWidth={1.5} className="text-varnish" />
+            {CONTACT_INFO.email}
+          </a>
+          <a
+            href={`tel:${CONTACT_INFO.phoneHref}`}
+            className="flex items-center gap-3 font-display text-2xl transition-colors hover:text-varnish"
+          >
+            <Phone size={18} strokeWidth={1.5} className="text-varnish" />
+            {CONTACT_INFO.phone}
+          </a>
         </div>
       </section>
     </>

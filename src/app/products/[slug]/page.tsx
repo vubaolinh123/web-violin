@@ -4,7 +4,8 @@ import type { Metadata } from "next";
 import { ArrowLeft } from "lucide-react";
 import { getProductBySlug, products } from "@/lib/data/products";
 import ProductFigure from "@/components/products/ProductFigure";
-import AddToInquiry from "@/components/products/AddToInquiry";
+import ButtonLink from "@/components/ui/ButtonLink";
+import { CONTACT_PATHS } from "@/lib/constants";
 import ProductCard from "@/components/products/ProductCard";
 import { ProductJsonLd } from "@/components/seo/JsonLd";
 import SectionHeading from "@/components/ui/SectionHeading";
@@ -93,10 +94,16 @@ export default async function ProductPage({ params }: Props) {
             <div className="mt-12 border border-line bg-paper-deep/60 p-6 md:p-8">
               <p className="font-display text-2xl">Price on request</p>
               <p className="mt-2 text-sm leading-relaxed text-ink-soft">
-                Add this to your inquiry list and send it to us. We will reply with pricing, availability and
-                distributor terms.
+                Distributors and industry partners can request an evaluation sample. Musicians and instrument
+                owners can contact us about availability and ordering.
               </p>
-              <AddToInquiry slug={product.slug} className="mt-6" />
+              <div className="mt-6 flex flex-wrap gap-3">
+                {CONTACT_PATHS.map((path, i) => (
+                  <ButtonLink key={path.id} href={path.href} variant={i === 0 ? "solid" : "outline"}>
+                    {path.cta}
+                  </ButtonLink>
+                ))}
+              </div>
             </div>
           </div>
         </div>

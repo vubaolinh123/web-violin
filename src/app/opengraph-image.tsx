@@ -20,8 +20,8 @@ export default function OpengraphImage() {
           fontFamily: "Georgia, serif",
         }}
       >
-        <div style={{ display: "flex", fontSize: 112, letterSpacing: 14, textTransform: "uppercase" }}>
-          Strad<span style={{ color: "#cdb27a" }}>+</span>
+        <div style={{ display: "flex", fontSize: 96, letterSpacing: 12, textTransform: "uppercase" }}>
+          Strad<span style={{ color: "#cdb27a", marginLeft: 28 }}>Plus</span>
         </div>
         <div style={{ marginTop: 28, fontSize: 40, fontStyle: "italic", color: "#cdb27a" }}>
           The acoustic DNA of wood.

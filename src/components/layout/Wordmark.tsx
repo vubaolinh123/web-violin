@@ -10,13 +10,12 @@ export default function Wordmark({
   return (
     <span
       className={cn(
-        "font-display text-2xl font-semibold uppercase tracking-[0.22em] md:text-[1.7rem]",
+        "whitespace-nowrap font-display text-xl font-semibold uppercase tracking-[0.16em] sm:text-2xl md:text-[1.6rem] md:tracking-[0.2em]",
         tone === "light" ? "text-ink" : "text-paper",
         className
       )}
     >
-      Strad
-      <span className={tone === "light" ? "text-varnish" : "text-brass-light"}>+</span>
+      Strad <span className={tone === "light" ? "text-varnish" : "text-brass-light"}>Plus</span>
     </span>
   );
 }

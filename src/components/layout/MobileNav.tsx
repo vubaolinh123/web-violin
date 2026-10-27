@@ -79,11 +79,11 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
                 </m.div>
               ))}
               <Link
-                href="/inquiry"
+                href="/contact"
                 onClick={onClose}
                 className="mt-8 inline-flex bg-varnish px-7 py-3.5 text-sm font-medium tracking-wide text-paper"
               >
-                Distributor inquiry
+                Contact Strad Plus
               </Link>
             </nav>
           </m.div>

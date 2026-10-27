@@ -3,15 +3,13 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ClipboardList, Menu } from "lucide-react";
-import { useInquiry } from "@/lib/hooks/useInquiry";
+import { Menu } from "lucide-react";
 import { NAV_LINKS } from "@/lib/constants";
 import { cn } from "@/lib/utils/cn";
 import Wordmark from "./Wordmark";
 import MobileNav from "./MobileNav";
 
 export default function Header() {
-  const { count } = useInquiry();
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -48,21 +46,13 @@ export default function Header() {
             })}
           </nav>
 
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-2">
             <Link
-              href="/inquiry"
-              aria-label={`Inquiry list, ${count} ${count === 1 ? "item" : "items"}`}
-              className="relative flex items-center gap-2 p-2 text-ink-soft transition-colors hover:text-ink"
+              href="/contact"
+              aria-current={pathname === "/contact" ? "page" : undefined}
+              className="hidden border border-varnish px-5 py-2.5 text-[0.75rem] font-medium uppercase tracking-[0.14em] text-varnish transition-colors hover:bg-varnish hover:text-paper sm:inline-flex"
             >
-              <ClipboardList size={20} strokeWidth={1.5} />
-              <span className="hidden text-[0.8rem] font-medium uppercase tracking-[0.14em] sm:inline">
-                Inquiry
-              </span>
-              {count > 0 && (
-                <span className="flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-varnish px-1 text-[10px] font-semibold text-paper">
-                  {count > 99 ? "99+" : count}
-                </span>
-              )}
+              Contact
             </Link>
 
             <button

@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import PageHero from "@/components/ui/PageHero";
 import Reveal from "@/components/ui/Reveal";
 import ProductCard from "@/components/products/ProductCard";
-import ButtonLink from "@/components/ui/ButtonLink";
+import SectionHeading from "@/components/ui/SectionHeading";
+import ContactPaths from "@/components/contact/ContactPaths";
 import { products } from "@/lib/data/products";
 
 export const metadata: Metadata = {
@@ -16,8 +17,8 @@ export default function ProductsPage() {
     <>
       <PageHero
         eyebrow="Products"
-        title="Strad Plus, ready to use."
-        intro="Two ways to bring the formula to an instrument. Pricing and availability are given on inquiry."
+        title="Strad Plus, from Technology to Product."
+        intro="The full Strad Plus treatment applied directly to the instrument, or our bridge and soundpost set derived from the same acoustic technology."
         figure={{ n: 4, m: 7 }}
       />
 
@@ -32,14 +33,15 @@ export default function ProductsPage() {
       </section>
 
       <section className="border-t border-line bg-paper-deep/60">
-        <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-8 px-5 py-16 sm:px-8 md:flex-row md:items-center">
-          <div className="max-w-xl">
-            <h2 className="font-display text-4xl font-medium leading-tight">Distributor or workshop?</h2>
-            <p className="mt-3 leading-relaxed text-ink-soft">
-              Tell us what you are interested in and we will respond with terms and availability.
-            </p>
+        <div className="mx-auto max-w-7xl px-5 py-20 sm:px-8 md:py-24">
+          <SectionHeading
+            eyebrow="Get in touch"
+            title="Bring Strad Plus to your instrument, or your market."
+            intro="Pricing and availability are given on request."
+          />
+          <div className="mt-12">
+            <ContactPaths />
           </div>
-          <ButtonLink href="/inquiry">Start an inquiry</ButtonLink>
         </div>
       </section>
     </>
