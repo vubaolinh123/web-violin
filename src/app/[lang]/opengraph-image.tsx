@@ -1,10 +1,17 @@
 import { ImageResponse } from "next/og";
+import { getDictionary } from "@/lib/dictionary";
+import { LOCALES, getLang } from "@/lib/i18n";
 
 export const alt = "Strad Plus — the acoustic DNA of wood";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-export default function OpengraphImage() {
+export function generateStaticParams() {
+  return LOCALES.map((lang) => ({ lang }));
+}
+
+export default async function OpengraphImage({ params }: { params: Promise<{ lang: string }> }) {
+  const { site } = getDictionary(await getLang(params));
   return new ImageResponse(
     (
       <div
@@ -24,7 +31,7 @@ export default function OpengraphImage() {
           Strad<span style={{ color: "#cdb27a", marginLeft: 28 }}>Plus</span>
         </div>
         <div style={{ marginTop: 28, fontSize: 40, fontStyle: "italic", color: "#cdb27a" }}>
-          The acoustic DNA of wood.
+          {`${site.tagline}.`}
         </div>
       </div>
     ),

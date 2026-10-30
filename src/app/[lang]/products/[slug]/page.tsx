@@ -2,50 +2,72 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { ArrowLeft } from "lucide-react";
-import { getProductBySlug, products } from "@/lib/data/products";
+import { PRODUCT_SLUGS, getProductBySlug, getProducts } from "@/lib/data/products";
 import ProductFigure from "@/components/products/ProductFigure";
 import ButtonLink from "@/components/ui/ButtonLink";
-import { CONTACT_PATHS } from "@/lib/constants";
 import ProductCard from "@/components/products/ProductCard";
 import { ProductJsonLd } from "@/components/seo/JsonLd";
 import SectionHeading from "@/components/ui/SectionHeading";
+import { getDictionary } from "@/lib/dictionary";
+import { LOCALES, alternates, getLang, localePath, type Locale } from "@/lib/i18n";
 
 interface Props {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ lang: string; slug: string }>;
 }
 
+const copy = {
+  en: {
+    back: "All products",
+    price: "Price on request",
+    priceNote:
+      "Distributors and industry partners can request an evaluation sample. Musicians and instrument owners can contact us about availability and ordering.",
+    more: { eyebrow: "Also from Strad Plus", title: "Continue exploring." },
+  },
+  vi: {
+    back: "Tất cả sản phẩm",
+    price: "Giá theo yêu cầu",
+    priceNote:
+      "Nhà phân phối và đối tác trong ngành có thể yêu cầu mẫu trải nghiệm. Nghệ sĩ và chủ nhạc cụ có thể liên hệ để biết tình trạng sản phẩm và cách đặt hàng.",
+    more: { eyebrow: "Sản phẩm khác của Strad Plus", title: "Tiếp tục khám phá." },
+  },
+} satisfies Record<Locale, unknown>;
+
 export function generateStaticParams() {
-  return products.map((p) => ({ slug: p.slug }));
+  return LOCALES.flatMap((lang) => PRODUCT_SLUGS.map((slug) => ({ lang, slug })));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const product = getProductBySlug(slug);
+  const lang = await getLang(params);
+  const product = getProductBySlug(lang, slug);
   if (!product) return {};
   return {
     title: product.name,
     description: product.summary,
+    alternates: alternates(lang, `/products/${slug}`),
     openGraph: { title: product.name, description: product.summary },
   };
 }
 
 export default async function ProductPage({ params }: Props) {
   const { slug } = await params;
-  const product = getProductBySlug(slug);
+  const lang = await getLang(params);
+  const product = getProductBySlug(lang, slug);
   if (!product) notFound();
 
-  const others = products.filter((p) => p.slug !== product.slug);
+  const t = copy[lang];
+  const others = getProducts(lang).filter((p) => p.slug !== product.slug);
 
   return (
     <>
-      <ProductJsonLd name={product.name} description={product.summary} slug={product.slug} />
+      <ProductJsonLd name={product.name} description={product.summary} slug={product.slug} lang={lang} />
 
       <div className="mx-auto max-w-7xl px-5 pt-8 sm:px-8">
         <Link
-          href="/products"
+          href={localePath(lang, "/products")}
           className="inline-flex items-center gap-2 text-sm text-ink-soft transition-colors hover:text-varnish"
         >
-          <ArrowLeft size={15} strokeWidth={1.5} /> All products
+          <ArrowLeft size={15} strokeWidth={1.5} /> {t.back}
         </Link>
       </div>
 
@@ -92,14 +114,11 @@ export default async function ProductPage({ params }: Props) {
             )}
 
             <div className="mt-12 border border-line bg-paper-deep/60 p-6 md:p-8">
-              <p className="font-display text-2xl">Price on request</p>
-              <p className="mt-2 text-sm leading-relaxed text-ink-soft">
-                Distributors and industry partners can request an evaluation sample. Musicians and instrument
-                owners can contact us about availability and ordering.
-              </p>
+              <p className="font-display text-2xl">{t.price}</p>
+              <p className="mt-2 text-sm leading-relaxed text-ink-soft">{t.priceNote}</p>
               <div className="mt-6 flex flex-wrap gap-3">
-                {CONTACT_PATHS.map((path, i) => (
-                  <ButtonLink key={path.id} href={path.href} variant={i === 0 ? "solid" : "outline"}>
+                {getDictionary(lang).contactPaths.map((path, i) => (
+                  <ButtonLink key={path.id} href={localePath(lang, path.href)} variant={i === 0 ? "solid" : "outline"}>
                     {path.cta}
                   </ButtonLink>
                 ))}
@@ -111,10 +130,10 @@ export default async function ProductPage({ params }: Props) {
 
       <section className="border-t border-line bg-paper-deep/60">
         <div className="mx-auto max-w-7xl px-5 py-20 sm:px-8">
-          <SectionHeading eyebrow="Also from Strad Plus" title="Continue exploring." />
+          <SectionHeading eyebrow={t.more.eyebrow} title={t.more.title} />
           <div className="mt-12 grid max-w-md">
             {others.map((p) => (
-              <ProductCard key={p.slug} product={p} />
+              <ProductCard key={p.slug} product={p} lang={lang} />
             ))}
           </div>
         </div>

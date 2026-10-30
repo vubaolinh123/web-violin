@@ -6,7 +6,7 @@ import { INTERVIEW_VIDEO } from "@/lib/constants";
 import ChladniArt from "./ChladniArt";
 
 /** Click-to-load player so the heavy Google Drive frame is only fetched on demand. */
-export default function VideoEmbed() {
+export default function VideoEmbed({ text }: { text: { title: string; play: string; openDrive: string } }) {
   const [playing, setPlaying] = useState(false);
 
   return (
@@ -15,7 +15,7 @@ export default function VideoEmbed() {
         {playing ? (
           <iframe
             src={INTERVIEW_VIDEO.embedUrl}
-            title={INTERVIEW_VIDEO.title}
+            title={text.title}
             allow="autoplay; fullscreen"
             allowFullScreen
             className="absolute inset-0 h-full w-full border-0"
@@ -24,7 +24,7 @@ export default function VideoEmbed() {
           <button
             type="button"
             onClick={() => setPlaying(true)}
-            aria-label={`Play video: ${INTERVIEW_VIDEO.title}`}
+            aria-label={`${text.play}: ${text.title}`}
             className="group absolute inset-0 flex items-center justify-center"
           >
             <div className="absolute inset-0 opacity-70">
@@ -38,14 +38,14 @@ export default function VideoEmbed() {
         )}
       </div>
       <p className="mt-4 flex flex-wrap items-center justify-between gap-3 text-sm text-paper/60">
-        <span>{INTERVIEW_VIDEO.title}</span>
+        <span>{text.title}</span>
         <a
           href={INTERVIEW_VIDEO.watchUrl}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center gap-1.5 text-brass-light transition-colors hover:text-paper"
         >
-          Open in Google Drive <ExternalLink size={13} strokeWidth={1.5} />
+          {text.openDrive} <ExternalLink size={13} strokeWidth={1.5} />
         </a>
       </p>
     </div>

@@ -1,19 +1,15 @@
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 import { CONTACT_INFO, SITE_NAME, SITE_URL } from "@/lib/constants";
-import {
-  FORMS,
-  THANKS_TITLE,
-  isFieldValid,
-  summarise,
-  type FormKind,
-  type FormValues,
-} from "@/lib/forms";
+import { fill, getDictionary } from "@/lib/dictionary";
+import { FORMS, isFieldValid, summarise, type FormKind, type FormValues } from "@/lib/forms";
+import { DEFAULT_LOCALE, hasLocale, localePath } from "@/lib/i18n";
 
 export const runtime = "nodejs";
 
 interface Payload {
   kind?: unknown;
+  lang?: unknown;
   values?: unknown;
   address2?: unknown; // honeypot
 }
@@ -84,6 +80,7 @@ export async function POST(request: Request) {
       { status: 429, headers: { "Retry-After": String(retryAfter) } }
     );
   }
+
   const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, CONTACT_TO, CONTACT_FROM } = process.env;
   if (!SMTP_HOST) {
     return NextResponse.json({ error: "not_configured" }, { status: 503 });
@@ -102,6 +99,8 @@ export async function POST(request: Request) {
   const message = values.message as string;
   const from = CONTACT_FROM ?? SMTP_USER ?? CONTACT_INFO.email;
   const inbox = CONTACT_TO ?? CONTACT_INFO.email;
+  const lang = typeof body.lang === "string" && hasLocale(body.lang) ? body.lang : DEFAULT_LOCALE;
+  const t = getDictionary(lang).form;
   const summary = summarise(form, values);
 
   try {
@@ -110,7 +109,7 @@ export async function POST(request: Request) {
       to: inbox,
       replyTo: `${name} <${email}>`,
       subject: `${form.subject} — ${name}`,
-      text: [...summary, "", message || "(no message)"].join("\n"),
+      text: [...summary, `Language: ${lang.toUpperCase()}`, "", message || "(no message)"].join("\n"),
     });
   } catch (error) {
     console.error("Contact form: sending failed", error);
@@ -123,22 +122,22 @@ export async function POST(request: Request) {
       from,
       to: `${name} <${email}>`,
       replyTo: inbox,
-      subject: THANKS_TITLE,
+      subject: t.thanksTitle,
       text: [
-        `Dear ${name},`,
+        fill(t.email.dear, { name }),
         "",
-        THANKS_TITLE,
-        ...form.thanks,
+        t.thanksTitle,
+        t.thanks[form.kind],
         "",
-        "For your reference, this is what you sent us:",
+        t.email.sent,
         "",
-        ...summary,
+        ...summarise(form, values, t.labels, t.options),
         ...(message ? ["", message] : []),
         "",
-        "Kind regards,",
+        t.email.regards,
         SITE_NAME,
         CONTACT_INFO.email,
-        SITE_URL,
+        `${SITE_URL}${localePath(lang, "/")}`,
       ].join("\n"),
     });
   } catch (error) {

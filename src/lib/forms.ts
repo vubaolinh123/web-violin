@@ -1,6 +1,8 @@
 /**
  * The two request forms of the site. The same definitions drive the form UI and the
  * server-side validation in /api/contact, so a field only has to be described once.
+ * Labels here are the English ones used in the notification to Strad Plus; the form UI and the
+ * visitor's confirmation take theirs from the dictionary.
  */
 
 export type FieldType = "text" | "email" | "select" | "checkboxes" | "textarea";
@@ -11,7 +13,6 @@ export interface FormField {
   type: FieldType;
   required: boolean;
   options?: string[];
-  placeholder?: string;
   autoComplete?: string;
   maxLength?: number;
   /** Takes the full row in the two-column layout. */
@@ -25,10 +26,7 @@ export interface FormDefinition {
   /** Subject line of the notification sent to Strad Plus. */
   subject: string;
   fields: FormField[];
-  thanks: string[];
 }
-
-export const THANKS_TITLE = "Thank you for your interest in Strad Plus.";
 
 export const FORMS: Record<FormKind, FormDefinition> = {
   evaluation: {
@@ -82,11 +80,7 @@ export const FORMS: Record<FormKind, FormDefinition> = {
         required: false,
         wide: true,
         maxLength: 5000,
-        placeholder: "Tell us about your business and your interest in Strad Plus.",
       },
-    ],
-    thanks: [
-      "We review every request personally and will contact you to discuss evaluation options and potential partnership opportunities.",
     ],
   },
   experience: {
@@ -110,10 +104,8 @@ export const FORMS: Record<FormKind, FormDefinition> = {
         required: false,
         wide: true,
         maxLength: 5000,
-        placeholder: "Tell us about your instrument and your interest in Strad Plus.",
       },
     ],
-    thanks: ["We review every request personally and will contact you as soon as possible."],
   },
 };
 
@@ -140,12 +132,21 @@ export function isFormComplete(form: FormDefinition, values: FormValues) {
   return form.fields.every((f) => isFieldValid(f, values[f.name]));
 }
 
-/** Plain-text summary of a submission, used in both emails. */
-export function summarise(form: FormDefinition, values: FormValues) {
+/**
+ * Plain-text summary of a submission, used in both emails. Pass `labels` and `options` from the
+ * dictionary to write it in the visitor's language; otherwise the English labels are used.
+ */
+export function summarise(
+  form: FormDefinition,
+  values: FormValues,
+  labels: Record<string, string> = {},
+  options: Record<string, string> = {}
+) {
+  const show = (v: string) => options[v] ?? v;
   return form.fields
     .filter((f) => f.type !== "textarea")
     .map((f) => {
       const v = values[f.name];
-      return `${f.label}: ${Array.isArray(v) ? v.join(", ") : v ?? ""}`;
+      return `${labels[f.name] ?? f.label}: ${Array.isArray(v) ? v.map(show).join(", ") : show(v ?? "")}`;
     });
 }

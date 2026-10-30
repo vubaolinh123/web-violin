@@ -2,10 +2,13 @@ import { Mail, Phone } from "lucide-react";
 import Link from "next/link";
 import PageHero from "@/components/ui/PageHero";
 import RequestForm from "./RequestForm";
-import { CONTACT_INFO, CONTACT_PATHS } from "@/lib/constants";
+import { CONTACT_INFO } from "@/lib/constants";
+import { getDictionary } from "@/lib/dictionary";
 import type { FormKind } from "@/lib/forms";
+import { localePath, type Locale } from "@/lib/i18n";
 
 interface RequestPageProps {
+  lang: Locale;
   kind: FormKind;
   eyebrow: string;
   title: string;
@@ -16,8 +19,9 @@ interface RequestPageProps {
 }
 
 /** Layout shared by the two request pages: title band, introduction, form and direct contact. */
-export default function RequestPage({ kind, eyebrow, title, intro, lead, figure }: RequestPageProps) {
-  const other = CONTACT_PATHS.find((p) => p.id !== (kind === "evaluation" ? "partners" : "musicians"));
+export default function RequestPage({ lang, kind, eyebrow, title, intro, lead, figure }: RequestPageProps) {
+  const dict = getDictionary(lang);
+  const other = dict.contactPaths.find((p) => p.id !== (kind === "evaluation" ? "partners" : "musicians"));
 
   return (
     <>
@@ -33,7 +37,7 @@ export default function RequestPage({ kind, eyebrow, title, intro, lead, figure 
             </div>
 
             <div className="mt-10 border-t border-line pt-8">
-              <h2 className="eyebrow text-varnish">Or reach us directly</h2>
+              <h2 className="eyebrow text-varnish">{dict.reachDirectly}</h2>
               <ul className="mt-5 space-y-3 text-ink-soft">
                 <li className="flex items-center gap-3">
                   <Mail size={17} strokeWidth={1.5} className="shrink-0 text-varnish" />
@@ -53,7 +57,7 @@ export default function RequestPage({ kind, eyebrow, title, intro, lead, figure 
             {other && (
               <p className="mt-10 text-sm leading-relaxed text-ink-mute">
                 {other.question}{" "}
-                <Link href={other.href} className="text-varnish underline underline-offset-4 decoration-varnish/30 hover:decoration-varnish">
+                <Link href={localePath(lang, other.href)} className="text-varnish underline underline-offset-4 decoration-varnish/30 hover:decoration-varnish">
                   {other.cta}
                 </Link>
               </p>
@@ -61,7 +65,7 @@ export default function RequestPage({ kind, eyebrow, title, intro, lead, figure 
           </aside>
 
           <div className="lg:col-span-8">
-            <RequestForm kind={kind} />
+            <RequestForm lang={lang} kind={kind} text={dict.form} />
           </div>
         </div>
       </section>

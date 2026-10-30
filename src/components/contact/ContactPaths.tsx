@@ -1,12 +1,14 @@
 import { ArrowRight } from "lucide-react";
 import ButtonLink from "@/components/ui/ButtonLink";
 import Reveal from "@/components/ui/Reveal";
-import { CONTACT_PATHS } from "@/lib/constants";
+import { getDictionary } from "@/lib/dictionary";
+import { localePath, type Locale } from "@/lib/i18n";
 import { cn } from "@/lib/utils/cn";
 
 /** The two audiences side by side, each with its own way to get in touch. */
-export default function ContactPaths({ tone = "light" }: { tone?: "light" | "varnish" }) {
+export default function ContactPaths({ lang, tone = "light" }: { lang: Locale; tone?: "light" | "varnish" }) {
   const onVarnish = tone === "varnish";
+  const paths = getDictionary(lang).contactPaths;
   return (
     <div
       className={cn(
@@ -14,7 +16,7 @@ export default function ContactPaths({ tone = "light" }: { tone?: "light" | "var
         onVarnish ? "bg-paper/20" : "border border-line bg-line"
       )}
     >
-      {CONTACT_PATHS.map((path, i) => (
+      {paths.map((path, i) => (
         <Reveal
           key={path.id}
           delay={i * 0.1}
@@ -33,7 +35,7 @@ export default function ContactPaths({ tone = "light" }: { tone?: "light" | "var
             {path.description}
           </p>
           <ButtonLink
-            href={path.href}
+            href={localePath(lang, path.href)}
             variant={onVarnish ? "solid" : i === 0 ? "solid" : "outline"}
             className={cn(
               "mt-8 self-start",

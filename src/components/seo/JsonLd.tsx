@@ -1,4 +1,6 @@
-import { CONTACT_INFO, SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/constants";
+import { CONTACT_INFO, SITE_NAME, SITE_URL } from "@/lib/constants";
+import { getDictionary } from "@/lib/dictionary";
+import { localePath, type Locale } from "@/lib/i18n";
 
 interface JsonLdProps {
   data: Record<string, unknown>;
@@ -14,7 +16,7 @@ export default function JsonLd({ data }: JsonLdProps) {
   );
 }
 
-export function OrganizationJsonLd() {
+export function OrganizationJsonLd({ lang }: { lang: Locale }) {
   return (
     <JsonLd
       data={{
@@ -22,7 +24,7 @@ export function OrganizationJsonLd() {
         "@type": "Organization",
         name: SITE_NAME,
         url: SITE_URL,
-        description: SITE_DESCRIPTION,
+        description: getDictionary(lang).site.description,
         founder: { "@type": "Person", name: "Nguyễn Xuân Huy" },
         email: CONTACT_INFO.email,
         telephone: CONTACT_INFO.phone,
@@ -31,7 +33,7 @@ export function OrganizationJsonLd() {
           email: CONTACT_INFO.email,
           telephone: CONTACT_INFO.phone,
           contactType: "sales",
-          availableLanguage: "English",
+          availableLanguage: ["English", "Vietnamese"],
         },
       }}
     />
@@ -42,10 +44,12 @@ export function ProductJsonLd({
   name,
   description,
   slug,
+  lang,
 }: {
   name: string;
   description: string;
   slug: string;
+  lang: Locale;
 }) {
   return (
     <JsonLd
@@ -54,7 +58,7 @@ export function ProductJsonLd({
         "@type": "Product",
         name,
         description,
-        url: `${SITE_URL}/products/${slug}`,
+        url: `${SITE_URL}${localePath(lang, `/products/${slug}`)}`,
         brand: { "@type": "Brand", name: SITE_NAME },
       }}
     />

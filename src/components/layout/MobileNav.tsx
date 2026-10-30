@@ -4,15 +4,19 @@ import { useEffect } from "react";
 import { m, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { X } from "lucide-react";
-import { NAV_LINKS } from "@/lib/constants";
+import { localePath, type Locale } from "@/lib/i18n";
 import Wordmark from "./Wordmark";
+import LanguageSwitcher from "./LanguageSwitcher";
+import type { HeaderText } from "./Header";
 
 interface MobileNavProps {
+  lang: Locale;
+  dict: HeaderText;
   isOpen: boolean;
   onClose: () => void;
 }
 
-export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
+export default function MobileNav({ lang, dict, isOpen, onClose }: MobileNavProps) {
   useEffect(() => {
     if (!isOpen) return;
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
@@ -42,7 +46,7 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
             key="drawer"
             role="dialog"
             aria-modal="true"
-            aria-label="Menu"
+            aria-label={dict.header.menu}
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
@@ -54,7 +58,7 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
               <button
                 type="button"
                 onClick={onClose}
-                aria-label="Close menu"
+                aria-label={dict.header.closeMenu}
                 className="p-2 text-ink-soft transition-colors hover:text-ink"
               >
                 <X size={22} strokeWidth={1.5} />
@@ -62,7 +66,7 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
             </div>
 
             <nav aria-label="Mobile" className="flex-1 overflow-y-auto px-6 py-6">
-              {NAV_LINKS.map((link, i) => (
+              {dict.nav.map((link, i) => (
                 <m.div
                   key={link.href}
                   initial={{ opacity: 0, x: 16 }}
@@ -70,7 +74,7 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
                   transition={{ delay: 0.06 + i * 0.05 }}
                 >
                   <Link
-                    href={link.href}
+                    href={localePath(lang, link.href)}
                     onClick={onClose}
                     className="block border-b border-line py-4 font-display text-2xl text-ink transition-colors hover:text-varnish"
                   >
@@ -79,12 +83,13 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
                 </m.div>
               ))}
               <Link
-                href="/contact"
+                href={localePath(lang, "/contact")}
                 onClick={onClose}
                 className="mt-8 inline-flex bg-varnish px-7 py-3.5 text-sm font-medium tracking-wide text-paper"
               >
-                Contact Strad Plus
+                {dict.header.contactLong}
               </Link>
+              <LanguageSwitcher lang={lang} label={dict.header.language} className="mt-8 text-sm" />
             </nav>
           </m.div>
         </>
