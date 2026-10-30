@@ -13,7 +13,7 @@ import {
 } from "@/lib/forms";
 import { cn } from "@/lib/utils/cn";
 
-type Status = "idle" | "sending" | "sent" | "unavailable" | "error";
+type Status = "idle" | "sending" | "sent" | "unavailable" | "limited" | "error";
 
 const fieldClass =
   "w-full border border-line bg-white/60 px-4 py-3 text-base text-ink placeholder:text-ink-mute transition-colors focus:border-varnish focus:outline-none";
@@ -39,6 +39,7 @@ export default function RequestForm({ kind }: { kind: FormKind }) {
   const form = FORMS[kind];
   const [values, setValues] = useState<FormValues>({});
   const [status, setStatus] = useState<Status>("idle");
+  const [retryAfter, setRetryAfter] = useState(0);
   const complete = isFormComplete(form, values);
 
   const set = (name: string, value: string | string[]) => setValues((v) => ({ ...v, [name]: value }));
@@ -63,6 +64,10 @@ export default function RequestForm({ kind }: { kind: FormKind }) {
       if (res.ok) {
         setStatus("sent");
         window.scrollTo({ top: 0, behavior: "smooth" });
+      } else if (res.status === 429) {
+        const data = await res.json().catch(() => ({}));
+        setRetryAfter(Number(data.retryAfter) || 15);
+        setStatus("limited");
       } else {
         setStatus(res.status === 503 ? "unavailable" : "error");
       }
@@ -184,6 +189,12 @@ export default function RequestForm({ kind }: { kind: FormKind }) {
         ) : (
           <p className="text-sm text-ink-mute" aria-live="polite">
             Please complete all fields marked <span className="text-varnish">*</span> to send your request.
+          </p>
+        )}
+
+        {status === "limited" && (
+          <p role="alert" className="text-sm leading-relaxed text-varnish">
+            You have just sent a request. Please wait {retryAfter} seconds before sending another.
           </p>
         )}
 

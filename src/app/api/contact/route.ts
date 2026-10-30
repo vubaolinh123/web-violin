@@ -22,6 +22,27 @@ function clean(value: unknown, max: number) {
   return typeof value === "string" ? value.trim().slice(0, max) : "";
 }
 
+/** One accepted request per sender every 15 seconds, tracked per IP and per email address. */
+const RATE_LIMIT_MS = 15_000;
+const lastAccepted = new Map<string, number>();
+
+function clientIp(request: Request) {
+  const forwarded = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim();
+  return forwarded || request.headers.get("x-real-ip") || "unknown";
+}
+
+/** Seconds the sender still has to wait, or 0 when the request may go through (and is then recorded). */
+function rateLimit(keys: string[]) {
+  const now = Date.now();
+  for (const [key, time] of lastAccepted) {
+    if (now - time >= RATE_LIMIT_MS) lastAccepted.delete(key);
+  }
+  const wait = Math.max(0, ...keys.map((k) => (lastAccepted.get(k) ?? 0) + RATE_LIMIT_MS - now));
+  if (wait > 0) return Math.ceil(wait / 1000);
+  for (const key of keys) lastAccepted.set(key, now);
+  return 0;
+}
+
 /** Strips characters that could break out of an address header. */
 function headerSafe(value: string) {
   return value.replace(/[<>"\r\n]/g, "");
@@ -56,6 +77,13 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "invalid_fields" }, { status: 400 });
   }
 
+  const retryAfter = rateLimit([`ip:${clientIp(request)}`, `email:${String(values.email).toLowerCase()}`]);
+  if (retryAfter) {
+    return NextResponse.json(
+      { error: "rate_limited", retryAfter },
+      { status: 429, headers: { "Retry-After": String(retryAfter) } }
+    );
+  }
   const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, CONTACT_TO, CONTACT_FROM } = process.env;
   if (!SMTP_HOST) {
     return NextResponse.json({ error: "not_configured" }, { status: 503 });
