@@ -23,7 +23,7 @@ export default function ArtistsProjectsPage() {
         figure={{ n: 5, m: 8 }}
       />
 
-      <section className="mx-auto max-w-7xl px-5 py-24 sm:px-8 md:py-28">
+      <section className="mx-auto max-w-7xl px-5 py-16 sm:px-8 md:py-20">
         <div className="divide-y divide-line border-y border-line">
           {projects.map((p) => (
             <Reveal key={p.title} className="grid items-center gap-8 py-10 md:grid-cols-12 md:gap-12">

@@ -23,7 +23,7 @@ export default function RequestPage({ kind, eyebrow, title, intro, lead, figure 
     <>
       <PageHero eyebrow={eyebrow} title={title} intro={intro} figure={figure} />
 
-      <section className="mx-auto max-w-7xl px-5 py-20 sm:px-8 md:py-28">
+      <section className="mx-auto max-w-7xl px-5 py-20 sm:px-8 md:py-20">
         <div className="grid gap-14 lg:grid-cols-12 lg:gap-16">
           <aside className="lg:col-span-4">
             <div className="prose-strad text-lg leading-relaxed text-ink-soft">

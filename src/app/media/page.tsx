@@ -22,7 +22,7 @@ export default function MediaPage() {
       />
 
       <section className="bg-night">
-        <div className="mx-auto max-w-5xl px-5 py-20 sm:px-8 md:py-28">
+        <div className="mx-auto max-w-5xl px-5 py-20 sm:px-8 md:py-20">
           <Reveal>
             <SectionHeading
               tone="dark"
@@ -37,7 +37,7 @@ export default function MediaPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-5 py-24 sm:px-8 md:py-28">
+      <section className="mx-auto max-w-7xl px-5 py-16 sm:px-8 md:py-20">
         <Reveal>
           <SectionHeading
             eyebrow="Pictures"

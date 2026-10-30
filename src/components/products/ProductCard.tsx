@@ -5,17 +5,17 @@ import ProductFigure from "./ProductFigure";
 
 export default function ProductCard({ product }: { product: Product }) {
   return (
-    <article className="group flex flex-col">
+    <article className="group grid gap-6 sm:grid-cols-[2fr_3fr] sm:items-center sm:gap-8">
       <Link
         href={`/products/${product.slug}`}
         aria-label={product.name}
         className="block overflow-hidden"
       >
         <div className="transition-transform duration-700 group-hover:scale-[1.02]">
-          <ProductFigure product={product} sizes="(min-width: 768px) 45vw, 100vw" />
+          <ProductFigure product={product} sizes="(min-width: 1024px) 20vw, (min-width: 640px) 40vw, 100vw" />
         </div>
       </Link>
-      <div className="mt-6 flex flex-1 flex-col">
+      <div className="flex flex-col">
         <p className="eyebrow text-varnish">{product.kind}</p>
         <h3 className="mt-3 font-display text-3xl font-medium leading-tight text-ink">
           <Link href={`/products/${product.slug}`} className="transition-colors hover:text-varnish">

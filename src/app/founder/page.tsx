@@ -32,7 +32,7 @@ export default function FounderPage() {
         figure={{ n: 2, m: 5 }}
       />
 
-      <section className="mx-auto max-w-7xl px-5 py-24 sm:px-8 md:py-28">
+      <section className="mx-auto max-w-7xl px-5 py-16 sm:px-8 md:py-20">
         <div className="grid gap-14 md:grid-cols-12 md:gap-16">
           <Reveal className="md:col-span-4">
             <div className="relative aspect-[4/5] overflow-hidden bg-night md:sticky md:top-28">

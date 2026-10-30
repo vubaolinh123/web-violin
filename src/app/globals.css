@@ -2,18 +2,18 @@
 
 @theme {
   /* Palette — warm paper, ink, and violin varnish */
-  --color-paper: #f6f1e8;
-  --color-paper-deep: #ede5d6;
+  --color-paper: #fcfaf6;
+  --color-paper-deep: #f5f0e7;
   --color-ink: #1a1511;
   --color-ink-soft: #55493f;
   --color-ink-mute: #85786b;
-  --color-line: #d9cebc;
+  --color-line: #e6ddce;
   --color-varnish: #8b3a1e;
   --color-varnish-dark: #6b2b14;
   --color-brass: #a88b52;
   --color-brass-light: #cdb27a;
-  --color-night: #15110d;
-  --color-night-soft: #211b15;
+  --color-night: #2b231c;
+  --color-night-soft: #3a2f25;
 
   /* Fonts */
   --font-display: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;

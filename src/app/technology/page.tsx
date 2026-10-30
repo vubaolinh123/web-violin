@@ -83,7 +83,7 @@ export default function TechnologyPage() {
       </nav>
 
       {/* 01 The Beginning */}
-      <section id="beginning" className="scroll-mt-24 mx-auto max-w-7xl px-5 py-24 sm:px-8 md:py-28">
+      <section id="beginning" className="scroll-mt-24 mx-auto max-w-7xl px-5 py-16 sm:px-8 md:py-20">
         <div className="grid gap-14 md:grid-cols-12 md:gap-16">
           <Reveal className="md:col-span-5">
             <SectionHeading eyebrow={<Eyebrow index={0} />} title="Inspired by Stradivari." />
@@ -104,7 +104,7 @@ export default function TechnologyPage() {
 
       {/* 02 The Discovery */}
       <section id="discovery" className="scroll-mt-24 border-y border-line bg-paper-deep/60">
-        <div className="mx-auto grid max-w-7xl items-center gap-14 px-5 py-24 sm:px-8 md:grid-cols-12 md:gap-16 md:py-28">
+        <div className="mx-auto grid max-w-7xl items-center gap-14 px-5 py-16 sm:px-8 md:grid-cols-12 md:gap-16 md:py-20">
           <Reveal className="md:col-span-5">
             <figure>
               <div className="relative aspect-[4/5] overflow-hidden bg-night">
@@ -133,7 +133,7 @@ export default function TechnologyPage() {
       </section>
 
       {/* 03 How It Works */}
-      <section id="how-it-works" className="scroll-mt-24 mx-auto max-w-7xl px-5 py-24 sm:px-8 md:py-28">
+      <section id="how-it-works" className="scroll-mt-24 mx-auto max-w-7xl px-5 py-16 sm:px-8 md:py-20">
         <Reveal>
           <SectionHeading
             eyebrow={<Eyebrow index={2} />}
@@ -153,7 +153,7 @@ export default function TechnologyPage() {
 
       {/* 04 What It Changes */}
       <section id="results" className="scroll-mt-24 bg-night">
-        <div className="mx-auto max-w-7xl px-5 py-24 sm:px-8 md:py-28">
+        <div className="mx-auto max-w-7xl px-5 py-16 sm:px-8 md:py-20">
           <Reveal>
             <SectionHeading
               tone="dark"
@@ -174,7 +174,7 @@ export default function TechnologyPage() {
       </section>
 
       {/* 05 Fields of Application */}
-      <section id="applications" className="scroll-mt-24 mx-auto max-w-7xl px-5 py-24 sm:px-8 md:py-28">
+      <section id="applications" className="scroll-mt-24 mx-auto max-w-7xl px-5 py-16 sm:px-8 md:py-20">
         <Reveal>
           <SectionHeading
             eyebrow={<Eyebrow index={4} />}
@@ -202,7 +202,7 @@ export default function TechnologyPage() {
 
       {/* 06 See It In Practice */}
       <section id="in-practice" className="scroll-mt-24 border-t border-line bg-paper-deep/60">
-        <div className="mx-auto max-w-7xl px-5 py-24 sm:px-8 md:py-28">
+        <div className="mx-auto max-w-7xl px-5 py-16 sm:px-8 md:py-20">
           <Reveal>
             <SectionHeading eyebrow={<Eyebrow index={5} />} title="See it in practice." />
           </Reveal>

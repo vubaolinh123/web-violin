@@ -20,7 +20,7 @@ export default function ContactPage() {
         figure={{ n: 2, m: 3 }}
       />
 
-      <section className="mx-auto max-w-7xl px-5 py-20 sm:px-8 md:py-28">
+      <section className="mx-auto max-w-7xl px-5 py-20 sm:px-8 md:py-20">
         <ContactPaths />
 
         <div className="mt-16 flex flex-col gap-6 border-t border-line pt-10 sm:flex-row sm:items-center sm:gap-12">

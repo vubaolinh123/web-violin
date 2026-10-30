@@ -22,8 +22,8 @@ export default function ProductsPage() {
         figure={{ n: 4, m: 7 }}
       />
 
-      <section className="mx-auto max-w-7xl px-5 py-24 sm:px-8 md:py-28">
-        <div className="grid gap-14 md:grid-cols-2 md:gap-16">
+      <section className="mx-auto max-w-7xl px-5 py-16 sm:px-8 md:py-20">
+        <div className="grid gap-12 lg:grid-cols-2 lg:gap-14">
           {products.map((p, i) => (
             <Reveal key={p.slug} delay={i * 0.1}>
               <ProductCard product={p} />

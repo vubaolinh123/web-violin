@@ -61,8 +61,8 @@ export default function HomePage() {
       </section>
 
       {/* Story */}
-      <section className="section-offscreen mx-auto max-w-7xl px-5 py-24 sm:px-8 md:py-32">
-        <div className="grid gap-14 md:grid-cols-12 md:gap-16">
+      <section className="section-offscreen mx-auto max-w-7xl px-5 py-16 sm:px-8 md:py-20">
+        <div className="grid gap-10 md:grid-cols-12 md:gap-16">
           <Reveal className="md:col-span-5">
             <SectionHeading
               eyebrow="The story"
@@ -96,13 +96,13 @@ export default function HomePage() {
 
       {/* Founder */}
       <section className="section-offscreen border-t border-line bg-paper-deep/60">
-        <div className="mx-auto grid max-w-7xl items-center gap-14 px-5 py-24 sm:px-8 md:grid-cols-12 md:py-32">
-          <Reveal className="md:col-span-5">
+        <div className="mx-auto grid max-w-7xl items-center gap-10 px-5 py-16 sm:px-8 md:grid-cols-12 md:py-20">
+          <Reveal className="md:col-span-4">
             <div className="relative aspect-[4/5] overflow-hidden bg-night">
               <ChladniArt n={2} m={5} levels={4} resolution={56} />
             </div>
           </Reveal>
-          <Reveal delay={0.1} className="md:col-span-7 md:pl-8">
+          <Reveal delay={0.1} className="md:col-span-8 md:pl-8">
             <SectionHeading
               eyebrow="Founder"
               title="Nguyễn Xuân Huy"
@@ -117,7 +117,7 @@ export default function HomePage() {
 
       {/* Products */}
       <section className="section-offscreen border-t border-line">
-        <div className="mx-auto max-w-7xl px-5 py-24 sm:px-8 md:py-32">
+        <div className="mx-auto max-w-7xl px-5 py-16 sm:px-8 md:py-20">
           <Reveal className="flex flex-wrap items-end justify-between gap-6">
             <SectionHeading
               eyebrow="Products"
@@ -128,7 +128,7 @@ export default function HomePage() {
               All products <ArrowRight size={15} strokeWidth={1.5} />
             </ButtonLink>
           </Reveal>
-          <div className="mt-14 grid gap-12 md:grid-cols-2 md:gap-14">
+          <div className="mt-10 grid gap-10 lg:grid-cols-2 lg:gap-14">
             {products.map((p, i) => (
               <Reveal key={p.slug} delay={i * 0.1}>
                 <ProductCard product={p} />
@@ -140,7 +140,7 @@ export default function HomePage() {
 
       {/* Applications */}
       <section className="section-offscreen border-t border-line bg-paper-deep/60">
-        <div className="mx-auto max-w-7xl px-5 py-24 sm:px-8 md:py-32">
+        <div className="mx-auto max-w-7xl px-5 py-16 sm:px-8 md:py-20">
           <Reveal>
             <SectionHeading
               eyebrow="Applications"
@@ -148,9 +148,9 @@ export default function HomePage() {
               intro="Wherever wood matters, Strad Plus makes a difference."
             />
           </Reveal>
-          <div className="mt-14 grid gap-px border border-line bg-line md:grid-cols-3">
+          <div className="mt-10 grid gap-px border border-line bg-line md:grid-cols-3">
             {applications.map((a, i) => (
-              <Reveal key={a.id} delay={i * 0.1} className="flex flex-col bg-paper p-8 md:p-10">
+              <Reveal key={a.id} delay={i * 0.1} className="flex flex-col bg-paper p-8">
                 <p className="eyebrow text-varnish">0{i + 1}</p>
                 <h3 className="mt-5 font-display text-3xl font-medium leading-tight">{a.title}</h3>
                 <p className="mt-4 flex-1 font-display text-xl italic leading-snug text-ink-soft">{a.lead}</p>
@@ -165,8 +165,8 @@ export default function HomePage() {
 
       {/* Video */}
       <section className="section-offscreen bg-night">
-        <div className="mx-auto max-w-5xl px-5 py-24 sm:px-8 md:py-32">
-          <Reveal>
+        <div className="mx-auto grid max-w-7xl items-center gap-10 px-5 py-16 sm:px-8 md:py-20 lg:grid-cols-12 lg:gap-14">
+          <Reveal className="lg:col-span-4">
             <SectionHeading
               tone="dark"
               eyebrow="Video"
@@ -174,14 +174,14 @@ export default function HomePage() {
               intro="Strad Plus applied to a $400 guitar, in conversation with guitarist Vũ Đức Hiển and Nguyễn Xuân Huy."
             />
           </Reveal>
-          <Reveal delay={0.1} className="mt-12">
+          <Reveal delay={0.1} className="lg:col-span-8">
             <VideoEmbed />
           </Reveal>
         </div>
       </section>
 
       {/* Recognition & Collaborations */}
-      <section className="section-offscreen mx-auto max-w-7xl px-5 py-24 sm:px-8 md:py-32">
+      <section className="section-offscreen mx-auto max-w-7xl px-5 py-16 sm:px-8 md:py-20">
         <Reveal className="flex flex-wrap items-end justify-between gap-6">
           <SectionHeading
             eyebrow="Recognition"
@@ -192,9 +192,9 @@ export default function HomePage() {
             All artists & projects <ArrowRight size={15} strokeWidth={1.5} />
           </ButtonLink>
         </Reveal>
-        <div className={cn("mt-14 grid gap-px border border-line bg-line", projects.length > 1 && "md:grid-cols-2")}>
+        <div className={cn("mt-10 grid gap-px border border-line bg-line", projects.length > 1 && "md:grid-cols-2")}>
           {projects.map((p, i) => (
-            <Reveal key={p.title} delay={i * 0.1} className="bg-paper p-8 md:p-10">
+            <Reveal key={p.title} delay={i * 0.1} className="bg-paper p-8">
               <p className="eyebrow text-varnish">{p.category}</p>
               <h3 className="mt-4 font-display text-3xl font-medium leading-tight">{p.title}</h3>
               <p className="mt-2 text-sm text-ink-mute">{p.artist}</p>
@@ -206,13 +206,13 @@ export default function HomePage() {
 
       {/* Contact CTA */}
       <section className="bg-varnish">
-        <div className="mx-auto max-w-7xl px-5 py-20 sm:px-8 md:py-28">
+        <div className="mx-auto max-w-7xl px-5 py-16 sm:px-8 md:py-20">
           <Reveal>
             <h2 className="max-w-2xl font-display text-4xl font-medium leading-tight text-paper md:text-6xl">
               Bring Strad Plus to Your Region
             </h2>
           </Reveal>
-          <div className="mt-12 md:mt-16">
+          <div className="mt-10 md:mt-12">
             <ContactPaths tone="varnish" />
           </div>
         </div>
