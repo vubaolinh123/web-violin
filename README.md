@@ -36,3 +36,14 @@ array. Until then the site shows an acoustic contour figure (`/art/*.svg`, gener
 
 **Contact form:** copy `.env.example` to `.env.local` and fill in the SMTP settings. Without them the form
 asks visitors to email `contact@stradplus.com` directly.
+
+## Deploy on Vercel
+
+Import the GitHub repository in Vercel (framework preset: Next.js, no other build settings needed), then under
+**Settings → Environment Variables** add the variables from `.env.example`: `NEXT_PUBLIC_SITE_URL`,
+`SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `CONTACT_FROM`, `CONTACT_TO`. Redeploy after changing them.
+
+The contact form allows one request per visitor every 15 seconds. On Vercel this limit is per function
+instance unless a Redis store is connected: **Storage → Create Database → Upstash for Redis** (free tier is
+enough), connect it to the project and redeploy. Its `KV_REST_API_URL` / `KV_REST_API_TOKEN` variables are
+picked up automatically.

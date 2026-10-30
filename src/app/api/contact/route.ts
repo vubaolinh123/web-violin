@@ -4,8 +4,11 @@ import { CONTACT_INFO, SITE_NAME, SITE_URL } from "@/lib/constants";
 import { fill, getDictionary } from "@/lib/dictionary";
 import { FORMS, isFieldValid, summarise, type FormKind, type FormValues } from "@/lib/forms";
 import { DEFAULT_LOCALE, hasLocale, localePath } from "@/lib/i18n";
+import { rateLimit } from "@/lib/rate-limit";
 
 export const runtime = "nodejs";
+// Two emails over SMTP to a server in Vietnam; leave room above Vercel's short default.
+export const maxDuration = 30;
 
 interface Payload {
   kind?: unknown;
@@ -20,23 +23,11 @@ function clean(value: unknown, max: number) {
 
 /** One accepted request per sender every 15 seconds, tracked per IP and per email address. */
 const RATE_LIMIT_MS = 15_000;
-const lastAccepted = new Map<string, number>();
 
 function clientIp(request: Request) {
+  // Vercel sets these from the connecting client and overwrites any value the client sent.
   const forwarded = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim();
   return forwarded || request.headers.get("x-real-ip") || "unknown";
-}
-
-/** Seconds the sender still has to wait, or 0 when the request may go through (and is then recorded). */
-function rateLimit(keys: string[]) {
-  const now = Date.now();
-  for (const [key, time] of lastAccepted) {
-    if (now - time >= RATE_LIMIT_MS) lastAccepted.delete(key);
-  }
-  const wait = Math.max(0, ...keys.map((k) => (lastAccepted.get(k) ?? 0) + RATE_LIMIT_MS - now));
-  if (wait > 0) return Math.ceil(wait / 1000);
-  for (const key of keys) lastAccepted.set(key, now);
-  return 0;
 }
 
 /** Strips characters that could break out of an address header. */
@@ -73,7 +64,10 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "invalid_fields" }, { status: 400 });
   }
 
-  const retryAfter = rateLimit([`ip:${clientIp(request)}`, `email:${String(values.email).toLowerCase()}`]);
+  const retryAfter = await rateLimit(
+    [`ip:${clientIp(request)}`, `email:${String(values.email).toLowerCase()}`],
+    RATE_LIMIT_MS
+  );
   if (retryAfter) {
     return NextResponse.json(
       { error: "rate_limited", retryAfter },
@@ -92,6 +86,10 @@ export async function POST(request: Request) {
     port,
     secure: port === 465,
     auth: SMTP_USER ? { user: SMTP_USER, pass: SMTP_PASS } : undefined,
+    // Fail fast instead of running until the function is cut off.
+    connectionTimeout: 10_000,
+    greetingTimeout: 10_000,
+    socketTimeout: 15_000,
   });
 
   const name = headerSafe(values.name as string);
