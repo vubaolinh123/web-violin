@@ -4,12 +4,13 @@ import ChladniArt from "@/components/ui/ChladniArt";
 import PageHero from "@/components/ui/PageHero";
 import Reveal from "@/components/ui/Reveal";
 import SectionHeading from "@/components/ui/SectionHeading";
+import { press, type MediaLink } from "@/lib/data/press";
 import { alternates, getLang, type LangParams, type Locale } from "@/lib/i18n";
 
-/** One entry of a Featured Media dropdown. Add `links` as soon as the material exists. */
+/** One entry of a Featured Media dropdown. Entries without `links` show a "coming soon" note. */
 interface MediaItem {
   title: string;
-  links?: { label: string; href: string }[];
+  links?: MediaLink[];
 }
 
 interface MediaGroup {
@@ -64,26 +65,27 @@ const copy = {
     media: {
       title: "Featured Media",
       pending: "Links and images will be added soon.",
+      viTag: "Vietnamese",
       groups: [
         {
           title: "Performance & Musicianship",
           tagline: "Nguyễn Xuân Huy as a performing violinist.",
           items: [
-            { title: "Concert performances" },
-            { title: "Solo performances" },
-            { title: "Interviews related to performance" },
+            { title: "Concert performances", links: [press.tokyo] },
+            { title: "Solo performances", links: [press.vnexpress] },
+            { title: "Interviews related to performance", links: [press.cand2016, press.dep2015, press.sggp, press.nld2007] },
           ],
         },
         {
           title: "The Porcelain Violin Project",
           tagline: "The world’s first professionally playable porcelain violin.",
           items: [
-            { title: "Documentary videos" },
-            { title: "Interviews" },
-            { title: "Press articles" },
-            { title: "Guinness / Record coverage" },
-            { title: "Museum exhibitions" },
-            { title: "Performances with the porcelain violin" },
+            { title: "Documentary videos", links: [press.vnewsVideo] },
+            { title: "Interviews", links: [press.vnewsInterview, press.daudu, press.tienphong] },
+            { title: "Press articles", links: [press.vtv, press.vietnamnet2019, press.tokyo] },
+            { title: "Guinness / Record coverage", links: [press.toquoc, press.vietnamnet2022] },
+            { title: "Museum exhibitions", links: [press.vnewsLamDong] },
+            { title: "Performances with the porcelain violin", links: [press.tokyo] },
           ],
         },
         {
@@ -92,18 +94,18 @@ const copy = {
             { title: "Research articles" },
             { title: "Interviews related to Strad Plus" },
             { title: "Talks on acoustics" },
-            { title: "Articles on instrument making" },
-            { title: "Other research projects" },
+            { title: "Articles on instrument making", links: [press.cand2011, press.dantri, press.vnexpress] },
+            { title: "Other research projects", links: [press.botket] },
           ],
         },
         {
           title: "Press & Recognition",
           items: [
-            { title: "Press" },
-            { title: "Television" },
-            { title: "VTV" },
-            { title: "Awards" },
-            { title: "Artistic profiles" },
+            { title: "Press", links: [press.nhandan2013, press.nhandan2011, press.ttvh2012, press.dantri, press.vnexpress, press.nld2007] },
+            { title: "Television", links: [press.vtc, press.thanhnien] },
+            { title: "VTV", links: [press.vtv] },
+            { title: "Awards", links: [press.toquoc, press.vietnamnet2022] },
+            { title: "Artistic profiles", links: [press.wikipedia, press.cand2016, press.sggp, press.dep2015] },
           ],
         },
       ] satisfies MediaGroup[],
@@ -154,26 +156,27 @@ const copy = {
     media: {
       title: "Tư liệu nổi bật",
       pending: "Liên kết và hình ảnh sẽ sớm được cập nhật.",
+      viTag: "",
       groups: [
         {
           title: "Biểu diễn & Nghệ thuật âm nhạc",
           tagline: "Nguyễn Xuân Huy trên cương vị nghệ sĩ violin biểu diễn.",
           items: [
-            { title: "Các buổi hoà nhạc" },
-            { title: "Biểu diễn độc tấu" },
-            { title: "Phỏng vấn về biểu diễn" },
+            { title: "Các buổi hoà nhạc", links: [press.tokyo] },
+            { title: "Biểu diễn độc tấu", links: [press.vnexpress] },
+            { title: "Phỏng vấn về biểu diễn", links: [press.cand2016, press.dep2015, press.sggp, press.nld2007] },
           ],
         },
         {
           title: "Dự án Violin sứ",
           tagline: "Cây violin sứ đầu tiên trên thế giới có thể biểu diễn chuyên nghiệp.",
           items: [
-            { title: "Video tài liệu" },
-            { title: "Phỏng vấn" },
-            { title: "Bài báo" },
-            { title: "Guinness / Thông tin về kỷ lục" },
-            { title: "Triển lãm bảo tàng" },
-            { title: "Biểu diễn với violin sứ" },
+            { title: "Video tài liệu", links: [press.vnewsVideo] },
+            { title: "Phỏng vấn", links: [press.vnewsInterview, press.daudu, press.tienphong] },
+            { title: "Bài báo", links: [press.vtv, press.vietnamnet2019, press.tokyo] },
+            { title: "Guinness / Thông tin về kỷ lục", links: [press.toquoc, press.vietnamnet2022] },
+            { title: "Triển lãm bảo tàng", links: [press.vnewsLamDong] },
+            { title: "Biểu diễn với violin sứ", links: [press.tokyo] },
           ],
         },
         {
@@ -182,18 +185,18 @@ const copy = {
             { title: "Bài báo về nghiên cứu" },
             { title: "Phỏng vấn liên quan đến Strad Plus" },
             { title: "Các buổi nói chuyện về âm học" },
-            { title: "Bài viết về chế tác đàn" },
-            { title: "Các dự án nghiên cứu khác" },
+            { title: "Bài viết về chế tác đàn", links: [press.cand2011, press.dantri, press.vnexpress] },
+            { title: "Các dự án nghiên cứu khác", links: [press.botket] },
           ],
         },
         {
           title: "Báo chí & Ghi nhận",
           items: [
-            { title: "Báo chí" },
-            { title: "Truyền hình" },
-            { title: "VTV" },
-            { title: "Các giải thưởng" },
-            { title: "Hồ sơ nghệ thuật" },
+            { title: "Báo chí", links: [press.nhandan2013, press.nhandan2011, press.ttvh2012, press.dantri, press.vnexpress, press.nld2007] },
+            { title: "Truyền hình", links: [press.vtc, press.thanhnien] },
+            { title: "VTV", links: [press.vtv] },
+            { title: "Các giải thưởng", links: [press.toquoc, press.vietnamnet2022] },
+            { title: "Hồ sơ nghệ thuật", links: [press.wikipedia, press.cand2016, press.sggp, press.dep2015] },
           ],
         },
       ] satisfies MediaGroup[],
@@ -282,17 +285,25 @@ export default async function FounderPage({ params }: LangParams) {
                     </summary>
                     <div className="pb-5 text-sm leading-relaxed text-ink-soft">
                       {item.links?.length ? (
-                        <ul className="space-y-2">
+                        <ul className="space-y-3">
                           {item.links.map((link) => (
                             <li key={link.href}>
                               <a
                                 href={link.href}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center gap-2 text-varnish underline decoration-varnish/30 underline-offset-4 hover:decoration-varnish"
+                                className="group/link inline-flex items-start gap-2 text-ink transition-colors hover:text-varnish"
                               >
-                                {link.label} <ExternalLink size={13} strokeWidth={1.5} />
+                                <span className="underline decoration-line underline-offset-4 group-hover/link:decoration-varnish">
+                                  {link.title}
+                                </span>
+                                <ExternalLink size={13} strokeWidth={1.5} className="mt-1 shrink-0 text-ink-mute" />
                               </a>
+                              <p className="mt-0.5 text-xs text-ink-mute">
+                                {link.source}
+                                {link.year ? ` · ${link.year}` : ""}
+                                {link.lang === "vi" && t.media.viTag ? ` · ${t.media.viTag}` : ""}
+                              </p>
                             </li>
                           ))}
                         </ul>
