@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
@@ -75,6 +76,21 @@ export default async function ProductPage({ params }: Props) {
         <div className="grid gap-12 md:grid-cols-12 md:gap-16">
           <div className="md:col-span-5">
             <ProductFigure product={product} priority sizes="(min-width: 768px) 40vw, 100vw" />
+            {product.images.length > 1 && (
+              <ul className="mt-3 grid grid-cols-3 gap-3">
+                {product.images.slice(1).map((src, i) => (
+                  <li key={src} className="relative aspect-[4/3] overflow-hidden bg-night">
+                    <Image
+                      src={src}
+                      alt={`${product.name} (${i + 2})`}
+                      fill
+                      sizes="(min-width: 768px) 13vw, 33vw"
+                      className="object-cover"
+                    />
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
 
           <div className="md:col-span-7">

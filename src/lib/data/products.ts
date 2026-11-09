@@ -28,7 +28,11 @@ interface ProductEntry {
 const entries: ProductEntry[] = [
   {
     slug: "instrument-treatment",
-    images: [],
+    images: [
+      "/images/violins/violin-front.jpg",
+      "/images/violins/violin-back.jpg",
+      "/images/violins/violin-label-strad-plus-stamp.jpg",
+    ],
     figure: { n: 2, m: 7 },
     text: {
       en: {
@@ -66,7 +70,7 @@ const entries: ProductEntry[] = [
   },
   {
     slug: "bridge-and-soundpost-set",
-    images: [],
+    images: ["/images/violins/violin-bridge-closeup.jpg", "/images/violins/violin-bridge-tailpiece.jpg"],
     figure: { n: 3, m: 5 },
     text: {
       en: {

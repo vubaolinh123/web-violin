@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { ChevronDown, ExternalLink } from "lucide-react";
-import ChladniArt from "@/components/ui/ChladniArt";
 import PageHero from "@/components/ui/PageHero";
 import Reveal from "@/components/ui/Reveal";
 import SectionHeading from "@/components/ui/SectionHeading";
@@ -19,6 +19,14 @@ interface MediaGroup {
   items: MediaItem[];
 }
 
+/** Cover picture of each Featured Media group, in the order the groups are listed. */
+const covers = [
+  { src: "/images/gold/gold-violin-pegbox-strings.jpg", position: "50% 50%" },
+  { src: "/videos/workshop-gold-leaf-porcelain-violin.jpg", position: "50% 50%" },
+  { src: "/images/violins/violin-back-maple.jpg", position: "50% 50%" },
+  { src: "/images/violins/violin-label-strad-plus-stamp.jpg", position: "50% 55%" },
+];
+
 const copy = {
   en: {
     meta: {
@@ -27,6 +35,7 @@ const copy = {
         "Nguyễn Xuân Huy: violinist, craftsman and scientific researcher, founder of Strad Plus. Trained at the Hanoi Conservatory and the Tchaikovsky Moscow State Conservatory.",
     },
     hero: { eyebrow: "Founder", intro: "Violinist, craftsman and scientific researcher." },
+    portraitAlt: "Nguyễn Xuân Huy performing on a gold violin",
     born: {
       title: "Born into Music",
       paragraphs: [
@@ -118,6 +127,7 @@ const copy = {
         "Nguyễn Xuân Huy: nghệ sĩ violin, nghệ nhân và nhà nghiên cứu khoa học, người sáng lập Strad Plus. Theo học tại Nhạc viện Hà Nội và Nhạc viện Quốc gia Tchaikovsky Moskva.",
     },
     hero: { eyebrow: "Nhà sáng lập", intro: "Nghệ sĩ violin, nghệ nhân và nhà nghiên cứu khoa học." },
+    portraitAlt: "Nguyễn Xuân Huy biểu diễn trên cây violin dát vàng",
     born: {
       title: "Sinh ra trong âm nhạc",
       paragraphs: [
@@ -222,7 +232,14 @@ export default async function FounderPage({ params }: LangParams) {
         <div className="grid gap-14 md:grid-cols-12 md:gap-16">
           <Reveal className="md:col-span-4">
             <div className="relative aspect-[4/5] overflow-hidden bg-night md:sticky md:top-28">
-              <ChladniArt n={2} m={5} levels={4} resolution={56} />
+              <Image
+                src="/images/avatar-web.jpg"
+                alt={t.portraitAlt}
+                fill
+                priority
+                sizes="(min-width: 768px) 33vw, 100vw"
+                className="object-cover object-[58%_40%]"
+              />
             </div>
           </Reveal>
 
@@ -265,54 +282,66 @@ export default async function FounderPage({ params }: LangParams) {
         </Reveal>
         <div className="mt-12 grid gap-px border border-line bg-line md:grid-cols-2">
           {t.media.groups.map((group: MediaGroup, i) => (
-            <Reveal key={group.title} delay={(i % 2) * 0.1} className="bg-paper p-8 md:p-10">
-              <p className="eyebrow text-varnish">0{i + 1}</p>
-              <h3 className="mt-4 font-display text-3xl font-medium leading-tight">{group.title}</h3>
-              {group.tagline && (
-                <p className="mt-3 font-display text-xl italic leading-snug text-ink-soft">{group.tagline}</p>
-              )}
+            <Reveal key={group.title} delay={(i % 2) * 0.1} className="bg-paper">
+              <div className="relative aspect-[16/9] overflow-hidden bg-night">
+                <Image
+                  src={covers[i].src}
+                  alt=""
+                  fill
+                  sizes="(min-width: 768px) 50vw, 100vw"
+                  className="object-cover"
+                  style={{ objectPosition: covers[i].position }}
+                />
+              </div>
+              <div className="p-8 md:p-10">
+                <p className="eyebrow text-varnish">0{i + 1}</p>
+                <h3 className="mt-4 font-display text-3xl font-medium leading-tight">{group.title}</h3>
+                {group.tagline && (
+                  <p className="mt-3 font-display text-xl italic leading-snug text-ink-soft">{group.tagline}</p>
+                )}
 
-              <div className="mt-6 divide-y divide-line border-y border-line">
-                {group.items.map((item) => (
-                  <details key={item.title} className="group">
-                    <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-4 text-ink transition-colors hover:text-varnish [&::-webkit-details-marker]:hidden">
-                      <span>{item.title}</span>
-                      <ChevronDown
-                        size={17}
-                        strokeWidth={1.5}
-                        className="shrink-0 text-ink-mute transition-transform duration-300 group-open:rotate-180"
-                      />
-                    </summary>
-                    <div className="pb-5 text-sm leading-relaxed text-ink-soft">
-                      {item.links?.length ? (
-                        <ul className="space-y-3">
-                          {item.links.map((link) => (
-                            <li key={link.href}>
-                              <a
-                                href={link.href}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="group/link inline-flex items-start gap-2 text-ink transition-colors hover:text-varnish"
-                              >
-                                <span className="underline decoration-line underline-offset-4 group-hover/link:decoration-varnish">
-                                  {link.title}
-                                </span>
-                                <ExternalLink size={13} strokeWidth={1.5} className="mt-1 shrink-0 text-ink-mute" />
-                              </a>
-                              <p className="mt-0.5 text-xs text-ink-mute">
-                                {link.source}
-                                {link.year ? ` · ${link.year}` : ""}
-                                {link.lang === "vi" && t.media.viTag ? ` · ${t.media.viTag}` : ""}
-                              </p>
-                            </li>
-                          ))}
-                        </ul>
-                      ) : (
-                        <p className="text-ink-mute">{t.media.pending}</p>
-                      )}
-                    </div>
-                  </details>
-                ))}
+                <div className="mt-6 divide-y divide-line border-y border-line">
+                  {group.items.map((item) => (
+                    <details key={item.title} className="group">
+                      <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-4 text-ink transition-colors hover:text-varnish [&::-webkit-details-marker]:hidden">
+                        <span>{item.title}</span>
+                        <ChevronDown
+                          size={17}
+                          strokeWidth={1.5}
+                          className="shrink-0 text-ink-mute transition-transform duration-300 group-open:rotate-180"
+                        />
+                      </summary>
+                      <div className="pb-5 text-sm leading-relaxed text-ink-soft">
+                        {item.links?.length ? (
+                          <ul className="space-y-3">
+                            {item.links.map((link) => (
+                              <li key={link.href}>
+                                <a
+                                  href={link.href}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="group/link inline-flex items-start gap-2 text-ink transition-colors hover:text-varnish"
+                                >
+                                  <span className="underline decoration-line underline-offset-4 group-hover/link:decoration-varnish">
+                                    {link.title}
+                                  </span>
+                                  <ExternalLink size={13} strokeWidth={1.5} className="mt-1 shrink-0 text-ink-mute" />
+                                </a>
+                                <p className="mt-0.5 text-xs text-ink-mute">
+                                  {link.source}
+                                  {link.year ? ` · ${link.year}` : ""}
+                                  {link.lang === "vi" && t.media.viTag ? ` · ${t.media.viTag}` : ""}
+                                </p>
+                              </li>
+                            ))}
+                          </ul>
+                        ) : (
+                          <p className="text-ink-mute">{t.media.pending}</p>
+                        )}
+                      </div>
+                    </details>
+                  ))}
+                </div>
               </div>
             </Reveal>
           ))}

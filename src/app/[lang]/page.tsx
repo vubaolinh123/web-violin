@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import ChladniArt from "@/components/ui/ChladniArt";
@@ -30,6 +31,7 @@ const copy = {
       title: "Deciphering the Acoustic DNA of Wood",
       text: "Developed by violinist, craftsman and researcher Nguyễn Xuân Huy over more than thirty years, Strad Plus is a proprietary method that enhances the way wood resonates, responds, and transmits vibration.",
       cta: "Discover Strad Plus",
+      photoAlt: "Nguyễn Xuân Huy performing on a gold violin",
     },
     story: {
       eyebrow: "The story",
@@ -45,6 +47,7 @@ const copy = {
       intro:
         "Violinist, craftsman and scientific researcher. Born into a family of musicians, trained at the Hanoi Conservatory and the Tchaikovsky Moscow State Conservatory. Driven by a lifelong quest to understand the voice of wood, he spent more than thirty years developing what would eventually become Strad Plus.",
       link: "Read his story",
+      photoAlt: "Nguyễn Xuân Huy carving a violin scroll in his workshop",
     },
     products: {
       eyebrow: "Products",
@@ -82,6 +85,7 @@ const copy = {
       title: "Giải mã ADN âm học của gỗ",
       text: "Được nghệ sĩ violin, nghệ nhân và nhà nghiên cứu Nguyễn Xuân Huy phát triển trong hơn ba mươi năm, Strad Plus là phương pháp độc quyền giúp gỗ cộng hưởng, phản hồi và truyền dao động tốt hơn.",
       cta: "Khám phá Strad Plus",
+      photoAlt: "Nguyễn Xuân Huy biểu diễn trên cây violin dát vàng",
     },
     story: {
       eyebrow: "Câu chuyện",
@@ -97,6 +101,7 @@ const copy = {
       intro:
         "Nghệ sĩ violin, nghệ nhân và nhà nghiên cứu khoa học. Sinh ra trong một gia đình nghệ thuật, theo học tại Nhạc viện Hà Nội và Nhạc viện Quốc gia Tchaikovsky Moskva. Với khát khao suốt đời thấu hiểu tiếng nói của gỗ, ông đã dành hơn ba mươi năm để phát triển nên Strad Plus.",
       link: "Đọc câu chuyện của ông",
+      photoAlt: "Nguyễn Xuân Huy chạm khắc đầu đàn trong xưởng",
     },
     products: {
       eyebrow: "Sản phẩm",
@@ -144,7 +149,18 @@ export default async function HomePage({ params }: LangParams) {
       <section className="relative overflow-hidden bg-night">
         <div className="absolute inset-0" aria-hidden="true">
           <ChladniArt n={3} m={5} width={160} height={100} resolution={120} levels={5} />
-          <div className="absolute inset-0 bg-gradient-to-r from-night via-night/80 to-night/10" />
+          <div className="absolute inset-0 bg-night/70" />
+        </div>
+        <div className="absolute inset-y-0 right-0 w-full opacity-30 md:w-[52%] md:opacity-100">
+          <Image
+            src="/images/avatar-web.jpg"
+            alt={t.hero.photoAlt}
+            fill
+            priority
+            sizes="(min-width: 768px) 52vw, 100vw"
+            className="object-cover object-[50%_28%]"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-night via-night/40 to-transparent md:via-night/10" />
           <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-night to-transparent" />
         </div>
         <div className="relative mx-auto max-w-7xl px-5 pb-24 pt-24 sm:px-8 md:pb-36 md:pt-36">
@@ -200,7 +216,13 @@ export default async function HomePage({ params }: LangParams) {
         <div className="mx-auto grid max-w-7xl items-center gap-10 px-5 py-16 sm:px-8 md:grid-cols-12 md:py-20">
           <Reveal className="md:col-span-4">
             <div className="relative aspect-[4/5] overflow-hidden bg-night">
-              <ChladniArt n={2} m={5} levels={4} resolution={56} />
+              <Image
+                src="/images/people/huy-workshop-carving-scroll.jpg"
+                alt={t.founder.photoAlt}
+                fill
+                sizes="(min-width: 768px) 33vw, 100vw"
+                className="object-cover object-[62%_50%]"
+              />
             </div>
           </Reveal>
           <Reveal delay={0.1} className="md:col-span-8 md:pl-8">
